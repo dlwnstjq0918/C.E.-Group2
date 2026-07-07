@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계절별 건설현장 안전보건 포털</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .safety-bg {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        /* 가이드 뷰어 애니메이션 */
+        .viewer-transition {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="safety-bg text-slate-800 min-h-screen flex flex-col relative">
+
+    <!-- 로컬 파일 실행 시 나타나는 보안 안내 경고 배너 (로컬 실행 시만 표시됨) -->
+    <div id="localWarningBanner" class="bg-red-600 text-white text-xs sm:text-sm py-3 px-4 hidden sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <span class="flex items-center gap-2 font-medium">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                현재 로컬 파일(file://)로 접속 중입니다. 브라우저 보안 정책으로 인해 가이드 문서(Iframe)가 차단될 수 있습니다.
+            </span>
+            <span class="text-2xs sm:text-xs bg-red-800 px-3 py-1 rounded font-bold">
+                GitHub에 업로드하거나 VS Code Live Server로 실행하면 정상 작동합니다.
+            </span>
+        </div>
+    </div>
+
+    <!-- 상단 내비게이션 바 -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- 로고 영역 -->
+                <div class="flex items-center space-x-3">
+                    <div class="bg-amber-500 text-slate-900 p-2 rounded-lg font-black tracking-wider flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold tracking-tight block">C.E.-Group2</span>
+                        <span class="text-xs text-amber-400 block -mt-1 font-medium">안전보건 통합 가이드 시스템</span>
+                    </div>
+                </div>
+
+                <!-- 데스크탑용 실시간 상태 바 -->
+                <div class="hidden lg:flex items-center space-x-4 bg-slate-800 px-4 py-2 rounded-full border border-slate-700">
+                    <span class="flex h-3 w-3 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-xs font-semibold text-slate-300">오늘의 건설현장 안전 등급: <span class="text-emerald-400">보통(안전보건 수칙 준수)</span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 비주얼 히어로 섹션 (QR 코드 상단 배치) -->
+    <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-repeat-x transform -skew-y-3 scale-110" style="background-image: repeating-linear-gradient(45deg, #f59e0b, #f59e0b 20px, transparent 20px, transparent 40px);"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <!-- 좌측 타이틀 영역 -->
+            <div class="w-full md:w-2/3 space-y-4 text-center md:text-left">
+                <span class="inline-block bg-amber-500/20 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/30 uppercase tracking-widest">Seasonal Safety Guide</span>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+                    계절별 건설현장 <br class="sm:hidden">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">위험 요인 및 안전관리 방안</span>
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base max-w-2xl">
+                    대한민국의 뚜렷한 사계절 기후 변화는 건설현장에 다양한 안전 리스크를 유발합니다. 
+                    각 계절별 핵심 위험 요인과 체계적인 예방 대책 가이드를 확인하여 중대재해 없는 안전한 일터를 만드십시오.
+                </p>
+            </div>
+            
+            <!-- 우측 QR코드 및 빠른 검색 영역 -->
+            <div class="w-full md:w-1/3 flex flex-col sm:flex-row md:flex-col gap-4 bg-slate-800/80 backdrop-blur p-5 rounded-2xl border border-slate-700 shadow-xl">
+                <!-- QR 코드 안내 -->
+                <div class="flex items-center gap-4 bg-slate-950/50 p-3 rounded-xl border border-slate-700/50 flex-1">
+                    <div class="bg-white p-1.5 rounded-lg shrink-0">
+                        <!-- 업로드된 QR코드 이미지 매핑 -->
+                        <img id="qrCodeImg" src="image_59a6c0.jpg" alt="안전포털 접속 QR코드" class="w-20 h-20 object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+window.location.href">
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-400">모바일 간편 접속 QR</h4>
+                        <p class="text-2xs text-slate-400 mt-1">현장 이동 시 스마트폰 카메라로 QR코드를 스캔하면 본 안전 가이드 포털로 즉시 연결됩니다.</p>
+                    </div>
+                </div>
+
+                <!-- 키워드 검색 -->
+                <div class="flex-1">
+                    <h4 class="text-xs font-bold text-slate-300 mb-2 flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-1.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        키워드 빠른 검색
+                    </h4>
+                    <input type="text" id="safetySearch" onkeyup="filterSeasons()" placeholder="지반, 온열, 화재, 질식 등..." class="w-full bg-slate-950 text-white rounded-lg px-3 py-1.5 text-xs border border-slate-700 focus:outline-none focus:border-amber-500 transition-all placeholder:text-slate-500">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메인 대시보드 그리드 영역 -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        
+        <!-- 계절 필터 탭 -->
+        <div class="flex justify-center mb-8 border-b border-slate-200">
+            <div class="inline-flex space-x-1 bg-slate-200/60 p-1.5 rounded-xl mb-4">
+                <button onclick="filterTab('all')" id="tab-all" class="tab-btn px-4 py-2 text-sm font-bold rounded-lg bg-slate-900 text-white transition-all shadow-sm">전체 보기</button>
+                <button onclick="filterTab('spring')" id="tab-spring" class="tab-btn px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-lg transition-all">봄 (Spring)</button>
+                <button onclick="filterTab('summer')" id="tab-summer" class="tab-btn px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-lg transition-all">여름 (Summer)</button>
+                <button onclick="filterTab('autumn')" id="tab-autumn" class="tab-btn px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-lg transition-all">가을 (Autumn)</button>
+                <button onclick="filterTab('winter')" id="tab-winter" class="tab-btn px-4 py-2 text-sm font-bold text-slate-600 hover:text-slate-900 rounded-lg transition-all">겨울 (Winter)</button>
+            </div>
+        </div>
+
+        <!-- 4개 계절 카드 그리드 -->
+        <div id="seasonGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- 1. 봄 (Spring) 카드 -->
+            <div class="season-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col" data-season="spring" data-keywords="봄 지반 붕괴 낙석 해빙기 강풍 2-1 2-2">
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-500 p-5 text-white flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <span class="p-2.5 bg-white/20 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight">봄철 안전관리</h2>
+                            <p class="text-xs text-emerald-100 font-medium">3월 ~ 5월 · 해빙기 특별 점검 기간</p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-800/30 text-white text-xs font-bold px-2.5 py-1 rounded-full border border-emerald-400/30">해빙기 대비</span>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div class="mb-5">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">핵심 위험요소</h4>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><strong class="text-slate-900 font-semibold">지반 및 흙막이 붕괴:</strong> 해빙기 연약화 지반 붕괴 우려</p>
+                            <p><strong class="text-slate-900 font-semibold">가설구조물 비계 전도:</strong> 강풍 및 부동 침하 대책 필요</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-5 mt-4 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-500 mb-2">공식 가이드라인 문서 열람</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="openGuideViewer('2-1.html', '가이드 2-1: 해빙기 공사현장 안전')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:border-emerald-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-emerald-600 block">가이드 2-1</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-emerald-700">해빙기 공사현장 안전</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button onclick="openGuideViewer('2-2.html', '가이드 2-2: 춘계 강풍 및 재해 예방')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:border-emerald-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-emerald-600 block">가이드 2-2</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-emerald-700">춘계 강풍 및 재해 예방</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 여름 (Summer) 카드 -->
+            <div class="season-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col" data-season="summer" data-keywords="여름 폭염 온열질환 감전 집중호우 태풍 2-3 2-4">
+                <div class="bg-gradient-to-r from-rose-600 to-amber-500 p-5 text-white flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <span class="p-2.5 bg-white/20 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight">여름철 안전관리</h2>
+                            <p class="text-xs text-rose-100 font-medium">6월 ~ 8월 · 폭염 및 집중호우 대책</p>
+                        </div>
+                    </div>
+                    <span class="bg-rose-800/30 text-white text-xs font-bold px-2.5 py-1 rounded-full border border-rose-400/30">풍수해 대비</span>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div class="mb-5">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">핵심 위험요소</h4>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><strong class="text-slate-900 font-semibold">폭염 온열질환:</strong> 야외 작업자 탈진 및 열사병 예방 관리</p>
+                            <p><strong class="text-slate-900 font-semibold">집중호우 감전:</strong> 지중 전선로 누전 및 기계 감전 사고 방지</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-5 mt-4 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-500 mb-2">공식 가이드라인 문서 열람</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="openGuideViewer('2-3.html', '가이드 2-3: 폭염 시 온열질환 예방')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-rose-50 hover:border-rose-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-rose-600 block">가이드 2-3</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-rose-700">폭염 시 온열질환 예방</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button onclick="openGuideViewer('2-4.html', '가이드 2-4: 장마철 집중호우 및 감전')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-rose-50 hover:border-rose-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-rose-600 block">가이드 2-4</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-rose-700">장마철 집중호우 및 감전</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 가을 (Autumn) 카드 -->
+            <div class="season-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col" data-season="autumn" data-keywords="가을 추락 화재 산소결핍 질식 벌 뱀 2-5 2-6">
+                <div class="bg-gradient-to-r from-orange-600 to-amber-600 p-5 text-white flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <span class="p-2.5 bg-white/20 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight">가을철 안전관리</h2>
+                            <p class="text-xs text-orange-100 font-medium">9월 ~ 11월 · 화재 및 가설 구조물 관리</p>
+                        </div>
+                    </div>
+                    <span class="bg-orange-800/30 text-white text-xs font-bold px-2.5 py-1 rounded-full border border-orange-400/30">화재·추락 주의</span>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div class="mb-5">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">핵심 위험요소</h4>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><strong class="text-slate-900 font-semibold">고소작업 추락:</strong> 비계 고정 상태 및 안전벨트 미흡</p>
+                            <p><strong class="text-slate-900 font-semibold">용접 화재:</strong> 건조한 환경 내 가연물 관리 및 소화기 미배치</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-5 mt-4 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-500 mb-2">공식 가이드라인 문서 열람</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="openGuideViewer('2-5.html', '가이드 2-5: 고소작업 추락 방지 대책')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50 hover:border-orange-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-orange-600 block">가이드 2-5</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-orange-700">고소작업 추락 방지 대책</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-orange-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button onclick="openGuideViewer('2-6.html', '가이드 2-6: 건조기 용접·화재 예방')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50 hover:border-orange-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-orange-600 block">가이드 2-6</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-orange-700">건조기 용접·화재 예방</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-orange-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 겨울 (Winter) 카드 -->
+            <div class="season-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col" data-season="winter" data-keywords="겨울 폭설 한파 빙판 미끄러짐 갈탄 동사 질식 콘크리트 양생 2-7 2-8">
+                <div class="bg-gradient-to-r from-cyan-600 to-blue-600 p-5 text-white flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <span class="p-2.5 bg-white/20 rounded-xl">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </span>
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight">겨울철 안전관리</h2>
+                            <p class="text-xs text-blue-100 font-medium">12월 ~ 2월 · 동절기 콘크리트 및 화재·질식 대책</p>
+                        </div>
+                    </div>
+                    <span class="bg-blue-800/30 text-white text-xs font-bold px-2.5 py-1 rounded-full border border-blue-400/30">동절기 특별대책</span>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div class="mb-5">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">핵심 위험요소</h4>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><strong class="text-slate-900 font-semibold">보온양생 질식:</strong> 콘크리트 보온 양생용 갈탄 가스 중독 사고 예방</p>
+                            <p><strong class="text-slate-900 font-semibold">한파 및 낙상:</strong> 도로 및 비계 빙판 결빙으로 인한 미끄러짐 위험</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-5 mt-4 space-y-3">
+                        <h4 class="text-xs font-bold text-slate-500 mb-2">공식 가이드라인 문서 열람</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="openGuideViewer('2-7.html', '가이드 2-7: 양생 밀폐공간 일산화탄소 질식')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 hover:border-blue-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-blue-600 block">가이드 2-7</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-emerald-700">양생 밀폐공간 일산화탄소 질식</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                            <button onclick="openGuideViewer('2-8.html', '가이드 2-8: 동절기 폭설 및 미끄러짐 방지')" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-blue-50 hover:border-blue-200 border border-slate-200 transition-all text-left group">
+                                <div class="truncate">
+                                    <span class="text-xs font-semibold text-blue-600 block">가이드 2-8</span>
+                                    <span class="text-sm font-bold text-slate-800 truncate block group-hover:text-emerald-700">동절기 폭설 및 미끄러짐 방지</span>
+                                </div>
+                                <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 당일 현장 간이 안전 자가점검 목록 -->
+        <div class="mt-12 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+            <div class="md:flex md:items-center md:justify-between mb-6">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">당일 현장 간이 안전 자가점검 목록</h3>
+                    <p class="text-sm text-slate-500">작업 착수 전, 관리자와 근로자가 필수적으로 준수해야 할 핵심 항목입니다.</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center bg-slate-100 px-3.5 py-1.5 rounded-lg border border-slate-200">
+                    <span class="text-xs font-bold text-slate-600 mr-2">진행도: </span>
+                    <div class="w-32 bg-slate-300 h-2.5 rounded-full overflow-hidden">
+                        <div id="checkProgress" class="bg-amber-500 h-2.5 w-0 transition-all duration-300"></div>
+                    </div>
+                    <span id="checkPercent" class="text-xs font-black text-slate-900 ml-2">0%</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="flex items-start p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer border border-transparent hover:border-slate-300 transition-all">
+                    <input type="checkbox" onchange="updateProgress()" class="safety-checkbox w-4.5 h-4.5 mt-0.5 mr-3 text-amber-500 focus:ring-amber-500 border-slate-300 rounded">
+                    <div>
+                        <span class="text-sm font-bold text-slate-800 block">계절별 핵심 기상 정보(온도/풍속/경보) 확인 완료</span>
+                        <span class="text-xs text-slate-500 block">기상 악화(강풍, 폭염, 한파 등) 대비 작업 지침 수립 여부</span>
+                    </div>
+                </label>
+                <label class="flex items-start p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer border border-transparent hover:border-slate-300 transition-all">
+                    <input type="checkbox" onchange="updateProgress()" class="safety-checkbox w-4.5 h-4.5 mt-0.5 mr-3 text-amber-500 focus:ring-amber-500 border-slate-300 rounded">
+                    <div>
+                        <span class="text-sm font-bold text-slate-800 block">작업 특성에 적합한 안전 보호구 및 작업복 상태 점검</span>
+                        <span class="text-xs text-slate-500 block">계절용 보호 안전장비(방한복, 동계 양생 환기 마스크, 냉각조끼 등) 확인</span>
+                    </div>
+                </label>
+                <label class="flex items-start p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer border border-transparent hover:border-slate-300 transition-all">
+                    <input type="checkbox" onchange="updateProgress()" class="safety-checkbox w-4.5 h-4.5 mt-0.5 mr-3 text-amber-500 focus:ring-amber-500 border-slate-300 rounded">
+                    <div>
+                        <span class="text-sm font-bold text-slate-800 block">현장 지반 상태 및 위험 시설물 육안 점검 완료</span>
+                        <span class="text-xs text-slate-500 block">해빙기/우기 시 흙막이 균열 및 붕괴 징후 조사</span>
+                    </div>
+                </label>
+                <label class="flex items-start p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer border border-transparent hover:border-slate-300 transition-all">
+                    <input type="checkbox" onchange="updateProgress()" class="safety-checkbox w-4.5 h-4.5 mt-0.5 mr-3 text-amber-500 focus:ring-amber-500 border-slate-300 rounded">
+                    <div>
+                        <span class="text-sm font-bold text-slate-800 block">비상 대피로 확보 및 응급 의료 이송 체계 정비</span>
+                        <span class="text-xs text-slate-500 block">질식 및 탈진 환자 발생 대비 비상 통신 및 구조장비 점검</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- 실시간 현장 소통게시판 세션 (Padlet) -->
+        <div class="mt-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-6 sm:p-8 text-slate-900 shadow-md">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 text-center md:text-left">
+                    <span class="inline-block bg-white/35 text-slate-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest">Interactive Board</span>
+                    <h3 class="text-xl sm:text-2xl font-black tracking-tight">현장 안전 소통 게시판</h3>
+                    <p class="text-sm font-medium text-slate-950 max-w-2xl leading-relaxed">
+                        현장의 위험 요인 무기명 제보, 안전 개선 제안, 안전활동 아이디어 공유 등 자유로운 소통 창구입니다. 
+                        현장의 목소리로 만드는 안전한 우리 일터, 지금 함께 참여해 보세요!
+                    </p>
+                </div>
+                <a href="https://padlet.com/dlwnstjq00/2-iewfbsrgxhapkf6k" target="_blank" rel="noopener noreferrer" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 shrink-0 w-full md:w-auto transform hover:scale-105 active:scale-95 duration-200">
+                    <svg class="w-5 h-5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    <span>소통 게시판 참여하기</span>
+                    <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 푸터 영역 -->
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left sm:flex sm:items-center sm:justify-between">
+            <div class="space-y-1.5 mb-6 sm:mb-0">
+                <div class="flex items-center justify-center sm:justify-start space-x-2">
+                    <div class="bg-amber-500 text-slate-900 font-bold px-2 py-0.5 text-xs rounded">C.E.-Group2</div>
+                    <span class="text-white font-bold text-sm">건설안전 가이드라인 포털</span>
+                </div>
+                <p class="text-xs text-slate-500">본 시스템은 2026년 최신 안전보건공단 지침 및 건설 법규를 준수하여 설계되었습니다.</p>
+            </div>
+            
+            <div class="space-y-2">
+                <span class="text-xs block text-slate-500">안전 비상 핫라인 연락처</span>
+                <span class="text-lg font-bold text-amber-400 block tracking-wider">119 / 안전보건공단 1588-3088</span>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pt-6 border-t border-slate-800/50 text-center text-xs text-slate-600">
+            &copy; 2026 C.E.-Group2. All Rights Reserved. 무단 복제 및 수정 시 산업 안전보건 관리 법에 저촉될 수 있습니다.
+        </div>
+    </footer>
+
+    <!-- Iframe 기반 전체화면 가이드 뷰어 영역 -->
+    <div id="guideViewer" class="fixed inset-0 bg-white z-50 hidden flex-col viewer-transition opacity-0 transform translate-y-4">
+        <!-- 뷰어 헤더바 -->
+        <div class="bg-slate-900 text-white h-16 px-4 flex items-center justify-between border-b border-slate-800 shrink-0">
+            <div class="flex items-center space-x-3">
+                <span class="inline-block bg-amber-500 text-slate-900 font-bold text-xs px-2 py-1 rounded">열람 중</span>
+                <span id="viewerTitle" class="text-sm font-bold truncate max-w-xs sm:max-w-md">안전 가이드라인</span>
+            </div>
+            <!-- 상단 닫기 단추 -->
+            <button onclick="triggerReturnConfirm()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                메인으로 복귀
+            </button>
+        </div>
+        
+        <!-- 문서 본문 프레임 영역 -->
+        <div class="flex-grow w-full bg-white relative">
+            <iframe id="guideIframe" src="about:blank" class="absolute inset-0 w-full h-full border-none"></iframe>
+        </div>
+    </div>
+
+    <!-- 메인으로 복귀 여부를 재확인하는 팝업 (모달) -->
+    <div id="returnConfirmModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 transform scale-95 opacity-0 transition-all duration-200" id="modalCard">
+            <div class="text-center">
+                <!-- 경고 아이콘 -->
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 text-amber-600 mb-4">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-base font-bold text-slate-950">메인 화면으로 돌아가시겠습니까?</h3>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">현재 열람 중인 안전보건 가이드를 닫고 계절별 대시보드로 돌아갑니다.</p>
+            </div>
+            <div class="mt-6 flex gap-3">
+                <button onclick="closeReturnConfirm()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-2.5 rounded-xl transition-all">
+                    계속 읽기
+                </button>
+                <button onclick="confirmReturnHome()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold py-2.5 rounded-xl transition-all shadow-md">
+                    예, 복귀합니다
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 스크립트 로직 -->
+    <script>
+        // 로컬 환경 감지 및 배포 유도 스크립트
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.protocol === 'file:') {
+                document.getElementById('localWarningBanner').classList.remove('hidden');
+            }
+        });
+
+        // ------------------------------------
+        // [신규 기능] 가이드 뷰어 제어 로직
+        // ------------------------------------
+        const guideViewer = document.getElementById('guideViewer');
+        const guideIframe = document.getElementById('guideIframe');
+        const viewerTitle = document.getElementById('viewerTitle');
+        const returnConfirmModal = document.getElementById('returnConfirmModal');
+        const modalCard = document.getElementById('modalCard');
+
+        // 가이드 열람 프레임 실행
+        function openGuideViewer(fileUrl, titleText) {
+            viewerTitle.innerText = titleText;
+            guideIframe.src = fileUrl;
+            
+            // 뷰어 노출 및 트랜지션 애니메이션
+            guideViewer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // 부모 페이지 스크롤 방지
+            
+            setTimeout(() => {
+                guideViewer.classList.remove('opacity-0', 'translate-y-4');
+                guideViewer.classList.add('opacity-100', 'translate-y-0');
+            }, 50);
+        }
+
+        // 복귀 확인 모달(팝업) 열기
+        function triggerReturnConfirm() {
+            returnConfirmModal.classList.remove('hidden');
+            returnConfirmModal.classList.add('flex');
+            
+            setTimeout(() => {
+                modalCard.classList.remove('scale-95', 'opacity-0');
+                modalCard.classList.add('scale-100', 'opacity-100');
+            }, 50);
+        }
+
+        // 복귀 확인 모달 닫기 (열람 유지)
+        function closeReturnConfirm() {
+            modalCard.classList.remove('scale-100', 'opacity-100');
+            modalCard.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                returnConfirmModal.classList.remove('flex');
+                returnConfirmModal.classList.add('hidden');
+            }, 200);
+        }
+
+        // 최종 메인 홈 복귀 승인
+        function confirmReturnHome() {
+            closeReturnConfirm();
+            
+            // 뷰어 제거 트랜지션
+            guideViewer.classList.remove('opacity-100', 'translate-y-0');
+            guideViewer.classList.add('opacity-0', 'translate-y-4');
+            
+            setTimeout(() => {
+                guideViewer.classList.add('hidden');
+                guideIframe.src = 'about:blank'; // 메모리 절약을 위한 프레임 초기화
+                document.body.style.overflow = ''; // 스크롤 복구
+            }, 300);
+        }
+
+        // ------------------------------------
+        // 기존 검색, 체크리스트, 필터 기능들
+        // ------------------------------------
+        function filterSeasons() {
+            const searchValue = document.getElementById('safetySearch').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.season-card');
+            
+            cards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                if (keywords.includes(searchValue)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterTab(seasonType) {
+            const cards = document.querySelectorAll('.season-card');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-slate-900', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'hover:text-slate-900');
+            });
+
+            const activeBtn = document.getElementById(`tab-${seasonType}`);
+            activeBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
+            activeBtn.classList.add('bg-slate-900', 'text-white', 'shadow-sm');
+
+            cards.forEach(card => {
+                const cardSeason = card.getAttribute('data-season');
+                if (seasonType === 'all' || cardSeason === seasonType) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('safetySearch').value = '';
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.safety-checkbox');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const percent = checkboxes.length > 0 ? Math.round((checkedCount / checkboxes.length) * 100) : 0;
+            
+            const progressBar = document.getElementById('checkProgress');
+            const progressText = document.getElementById('checkPercent');
+            
+            progressBar.style.width = `${percent}%`;
+            progressText.innerText = `${percent}%`;
+
+            if (percent === 100) {
+                progressText.innerText = '완료 🎉';
+                progressBar.classList.remove('bg-amber-500');
+                progressBar.classList.add('bg-emerald-500');
+            } else {
+                progressBar.classList.remove('bg-emerald-500');
+                progressBar.classList.add('bg-amber-500');
+            }
+        }
+    </script>
+</body>
+</html>
