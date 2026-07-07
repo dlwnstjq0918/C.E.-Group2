@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2-7. 동절기 건설현장 위험요인 및 안전관리 방안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17222C;          /* 진회남색: 본문 */
+    --steel:#54646F;        /* 강재 회색: 보조 텍스트 */
+    --frost:#EDF1F4;        /* 겨울 배경 */
+    --panel:#FFFFFF;
+    --line:#D4DCE2;
+    --safety:#E8590C;       /* 안전 오렌지 */
+    --hazard:#F5B301;       /* 위험 표지 노랑 */
+    --case-bg:#FBEFEC; --case-edge:#C2452D;   /* 사례 */
+    --law-bg:#EBF1F8;  --law-edge:#2E5F8A;    /* 근거 */
+    --act-bg:#EDF4EC;  --act-edge:#3E7A46;    /* 대책 */
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans KR',sans-serif;
+    background:var(--frost);
+    color:var(--ink);
+    line-height:1.75;
+    font-size:15.5px;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px 90px;}
+
+  /* ── 헤더: 안전표지 스타일 ── */
+  header{
+    background:var(--ink);
+    color:#fff;
+    padding:0 0 46px;
+  }
+  .stripe{
+    height:14px;
+    background:repeating-linear-gradient(-45deg,var(--hazard) 0 18px,var(--ink) 18px 36px);
+  }
+  .head-inner{max-width:920px;margin:0 auto;padding:44px 24px 0;}
+  .doc-no{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;letter-spacing:.12em;
+    color:var(--hazard);
+    border:1px solid rgba(245,179,1,.5);
+    padding:3px 12px;border-radius:3px;
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:'Gothic A1',sans-serif;
+    font-weight:900;
+    font-size:clamp(26px,4.4vw,40px);
+    line-height:1.3;
+    letter-spacing:-.01em;
+  }
+  h1 .sub{display:block;font-size:.5em;font-weight:700;color:#9FB0BC;margin-top:10px;letter-spacing:.02em;}
+  .head-meta{
+    margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;
+    font-size:13px;color:#C3CED7;
+  }
+  .head-meta span{background:rgba(255,255,255,.08);padding:4px 12px;border-radius:3px;}
+
+  /* ── 한 문장 요약 배너 ── */
+  .thesis{
+    background:var(--safety);
+    color:#fff;
+    margin:34px 0 0;
+    padding:20px 26px;
+    border-radius:6px;
+    font-family:'Gothic A1',sans-serif;
+    font-weight:800;
+    font-size:clamp(15px,2.2vw,18px);
+    line-height:1.6;
+    box-shadow:0 6px 18px rgba(232,89,12,.25);
+  }
+  .thesis em{font-style:normal;border-bottom:3px solid rgba(255,255,255,.55);}
+
+  /* ── 목차 ── */
+  nav.toc{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    margin-top:26px;
+    padding:22px 26px;
+  }
+  nav.toc h2{font-family:'Gothic A1',sans-serif;font-size:14px;font-weight:800;color:var(--steel);letter-spacing:.14em;margin-bottom:12px;}
+  nav.toc ol{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;}
+  nav.toc a{
+    color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;
+    display:flex;gap:10px;align-items:baseline;padding:4px 0;
+  }
+  nav.toc a:hover{color:var(--safety);}
+  nav.toc .n{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--safety);}
+
+  /* ── 섹션 공통 ── */
+  section{margin-top:58px;}
+  .sec-head{display:flex;align-items:stretch;gap:0;border-radius:6px;overflow:hidden;box-shadow:0 2px 10px rgba(23,34,44,.08);}
+  .sec-tab{
+    background:var(--ink);
+    color:var(--hazard);
+    font-family:'Gothic A1',sans-serif;font-weight:900;
+    font-size:26px;
+    display:flex;align-items:center;justify-content:center;
+    min-width:74px;
+    position:relative;
+  }
+  .sec-tab::after{
+    content:"";position:absolute;right:0;top:0;bottom:0;width:8px;
+    background:repeating-linear-gradient(-45deg,var(--hazard) 0 7px,var(--ink) 7px 14px);
+  }
+  .sec-title{
+    background:var(--panel);
+    flex:1;
+    padding:16px 24px;
+  }
+  .sec-title h2{font-family:'Gothic A1',sans-serif;font-weight:800;font-size:clamp(18px,2.8vw,22px);letter-spacing:-.01em;}
+  .sec-title p{font-size:13px;color:var(--steel);margin-top:2px;}
+
+  .sec-body{margin-top:18px;}
+  .sec-body > p{margin:14px 0;}
+
+  h3{
+    font-family:'Gothic A1',sans-serif;font-weight:800;font-size:16px;
+    margin:26px 0 10px;
+    display:flex;align-items:center;gap:10px;
+  }
+  h3::before{content:"";width:16px;height:3px;background:var(--safety);border-radius:2px;}
+
+  /* ── 정보 블록: 사례/근거/대책 (색으로 정보 유형 구분) ── */
+  .block{
+    border-radius:6px;
+    padding:18px 22px 18px 20px;
+    margin:14px 0;
+    border-left:5px solid;
+  }
+  .block .tag{
+    font-family:'Gothic A1',sans-serif;font-weight:800;font-size:12px;
+    letter-spacing:.14em;display:inline-block;margin-bottom:8px;
+    padding:2px 10px;border-radius:3px;color:#fff;
+  }
+  .block ul{margin:4px 0 0 2px;list-style:none;}
+  .block li{padding-left:16px;position:relative;margin:7px 0;}
+  .block li::before{content:"—";position:absolute;left:0;color:inherit;opacity:.5;}
+  .case{background:var(--case-bg);border-color:var(--case-edge);}
+  .case .tag{background:var(--case-edge);}
+  .law{background:var(--law-bg);border-color:var(--law-edge);}
+  .law .tag{background:var(--law-edge);}
+  .act{background:var(--act-bg);border-color:var(--act-edge);}
+  .act .tag{background:var(--act-edge);}
+
+  .stat{
+    display:flex;gap:18px;flex-wrap:wrap;margin:16px 0;
+  }
+  .stat .card{
+    flex:1;min-width:200px;
+    background:var(--panel);border:1px solid var(--line);border-radius:6px;
+    padding:16px 20px;
+  }
+  .stat .num{font-family:'Gothic A1',sans-serif;font-weight:900;font-size:30px;color:var(--safety);line-height:1.15;}
+  .stat .lab{font-size:13px;color:var(--steel);margin-top:4px;}
+
+  b, strong{font-weight:700;}
+  .kw{background:linear-gradient(transparent 62%,rgba(245,179,1,.45) 62%);font-weight:700;}
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:.92em;}
+
+  /* ── 표 ── */
+  .tbl-wrap{overflow-x:auto;margin:16px 0;border-radius:6px;box-shadow:0 2px 10px rgba(23,34,44,.07);}
+  table{width:100%;border-collapse:collapse;background:var(--panel);font-size:14px;min-width:640px;}
+  thead th{
+    background:var(--ink);color:#fff;
+    font-family:'Gothic A1',sans-serif;font-weight:700;font-size:13px;
+    padding:12px 14px;text-align:left;letter-spacing:.03em;
+  }
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:nth-child(even){background:#F7FAFB;}
+  td:first-child{font-weight:700;white-space:nowrap;}
+
+  /* ── 면접 포인트 ── */
+  .interview{
+    background:var(--ink);color:#E7EDF1;
+    border-radius:6px;padding:26px 28px;margin-top:20px;
+  }
+  .interview h3{color:#fff;margin-top:0;}
+  .interview h3::before{background:var(--hazard);}
+  .interview ol{margin:8px 0 0 4px;list-style:none;counter-reset:iv;}
+  .interview li{
+    counter-increment:iv;position:relative;padding-left:40px;margin:14px 0;
+  }
+  .interview li::before{
+    content:counter(iv,decimal-leading-zero);
+    position:absolute;left:0;top:2px;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    color:var(--hazard);border:1px solid rgba(245,179,1,.5);
+    border-radius:3px;padding:0 5px;
+  }
+  .interview strong{color:#fff;}
+  .interview .kw{background:linear-gradient(transparent 62%,rgba(245,179,1,.28) 62%);color:#fff;}
+
+  footer{
+    margin-top:70px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--steel);
+  }
+
+  @media (max-width:640px){
+    nav.toc ol{grid-template-columns:1fr;}
+    .sec-tab{min-width:58px;font-size:20px;}
+  }
+  @media print{
+    body{background:#fff;}
+    header{background:var(--ink) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    section{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="stripe"></div>
+  <div class="head-inner">
+    <span class="doc-no">STUDY NOTE 2-7 · WINTER SITE SAFETY</span>
+    <h1>동절기 건설현장 위험요인 및 안전관리 방안
+      <span class="sub">방지대책 · 법적 근거 · 국내 실제 사례 중심 정리 (면접·발표 대비)</span>
+    </h1>
+    <div class="head-meta">
+      <span>적용 시기 : 12월 ~ 2월 (+해빙기 2~3월)</span>
+      <span>기준 : 산업안전보건기준에 관한 규칙 · KCS 14 20 40</span>
+      <span>정리일 : 2026. 07.</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="thesis">
+    겨울 재해는 <em>추워서 피운 불</em>(질식·화재), <em>추워서 안 굳은 콘크리트</em>(동해·붕괴),
+    그리고 <em>얼었다 녹는 땅</em>(해빙기 붕괴)에서 나온다.
+  </div>
+
+  <nav class="toc">
+    <h2>CONTENTS</h2>
+    <ol>
+      <li><a href="#s1"><span class="n">01</span>콘크리트 보온양생 중 질식 (CO 중독)</a></li>
+      <li><a href="#s2"><span class="n">02</span>한중콘크리트 품질관리 실패 → 붕괴</a></li>
+      <li><a href="#s3"><span class="n">03</span>화재·폭발 (용접 불티 + 가연성 단열재)</a></li>
+      <li><a href="#s4"><span class="n">04</span>거푸집·동바리 및 가설구조물 붕괴</a></li>
+      <li><a href="#s5"><span class="n">05</span>지반 동결·융해 → 흙막이·사면 붕괴</a></li>
+      <li><a href="#s6"><span class="n">06</span>한랭질환 · 결빙 전도</a></li>
+      <li><a href="#s7"><span class="n">07</span>면접·발표용 핵심 정리</a></li>
+    </ol>
+  </nav>
+
+  <!-- ───────────── 01 질식 ───────────── -->
+  <section id="s1">
+    <div class="sec-head">
+      <div class="sec-tab">01</div>
+      <div class="sec-title">
+        <h2>콘크리트 보온양생 중 질식 (CO 중독)</h2>
+        <p>동절기 건설현장 사망사고의 대표 유형 — '조용한 암살자' 일산화탄소</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <h3>통계 · 배경</h3>
+      <div class="stat">
+        <div class="card"><div class="num">67%</div><div class="lab">최근 10년 겨울철(12~2월) 건설현장 질식사고 27건 중 18건이 콘크리트 보온양생 중 발생 (고용노동부)</div></div>
+        <div class="card"><div class="num">9.8%</div><div class="lab">전국 건설현장 중 동절기 보온양생에 갈탄·숯탄을 사용하는 비율 (건설노조 실태조사, 중부지방에서 더 높음)</div></div>
+      </div>
+      <p>갈탄·숯탄은 <b>저렴하고 보관이 편리</b>하다는 이유로 여전히 사용된다. 밀폐 천막 내 불완전연소로 발생하는
+      일산화탄소(CO)는 <span class="kw">무색·무취</span>라 인지하지 못한 채 중독되며, 온도 점검·연료 보충을 위해
+      들어갔다가 쓰러지고 → 구조하러 들어간 동료가 2차 재해를 당하는 패턴이 전형적이다.</p>
+
+      <div class="block case">
+        <span class="tag">실제 사례</span>
+        <ul>
+          <li><b>대구 (2021.11.)</b> — 양생용 갈탄난로의 CO가 <span class="kw">엘리베이터 피트·자재 인양구를 통해 확산</span>, 근로자 4명 질식(중대재해). CO는 밀폐 천막 안에만 머물지 않고 수직 통로를 타고 다른 층으로 퍼진다는 핵심 교훈.</li>
+          <li><b>경기 화성 (2022.1.)</b> — 숯탄을 피운 양생 장소에 출입한 근로자 2명 사상 (사망 1, 부상 1).</li>
+          <li><b>경기 용인 (2023.1.)</b> — 아파트 신축현장 옥탑 내부 양생용 난로로 1명 CO 중독 사망.</li>
+          <li><b>경기 파주 (2022.12.)</b> — 아파트 신축현장 지하 양생작업 중 근로자 10명 CO 중독 중경상.</li>
+        </ul>
+      </div>
+
+      <div class="block law">
+        <span class="tag">법적 근거</span>
+        <ul>
+          <li>갈탄 사용 양생장소는 산업안전보건법령상 <b>밀폐공간</b> → <span class="kw">산업안전보건기준에 관한 규칙 제619조~제625조</span> 적용 : 밀폐공간 작업 프로그램 수립, 산소·유해가스 농도 측정, 환기, 인원점검, 출입금지, 감시인 배치.</li>
+          <li>적정공기 기준 : <span class="mono">산소 18~23.5%</span>, <span class="mono">CO 30ppm 미만</span>.</li>
+        </ul>
+      </div>
+
+      <div class="block act">
+        <span class="tag">방지대책 (단계별)</span>
+        <ul>
+          <li><b>① 근원적 대책(대체)</b> — 갈탄·숯탄 대신 CO 발생이 적은 고체연료·<span class="kw">전기 열풍기</span> 사용. 대형사 현장은 사실상 열풍기 전환 추세. 단, 대체연료를 써도 양생장소는 여전히 밀폐공간으로 보아 동일 조치 필요.</li>
+          <li><b>② 관리적 대책</b> — 출입구에 질식 위험 '출입금지' 표지, 진입 전 유해가스 농도 측정 및 환기.</li>
+          <li><b>③ 보호구</b> — 적정공기 미확인 상태로 불가피하게 진입 시 <span class="kw">공기호흡기·송기마스크</span> 착용. ※ 방독마스크는 산소를 공급하지 못하므로 무의미 (면접 단골).</li>
+          <li><b>④ 대기업 벤치마킹</b> — 롯데건설 : 질식사고 대비 심폐소생술 교육 / GS건설 : 양생구간 출입 전 가스농도 사전 측정.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── 02 한중콘크리트 ───────────── -->
+  <section id="s2">
+    <div class="sec-head">
+      <div class="sec-tab">02</div>
+      <div class="sec-title">
+        <h2>한중콘크리트 품질관리 실패 → 붕괴</h2>
+        <p>'품질 문제'가 '구조 붕괴'로 이어지는 동절기 최대 리스크</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="block case">
+        <span class="tag">실제 사례 — 광주 화정 아이파크 붕괴 (2022.1.11.)</span>
+        <ul>
+          <li><b>개요</b> — 39층 콘크리트 타설 중 <span class="kw">23~38층 연쇄 붕괴</span>, 하청 노동자 6명 사망.</li>
+          <li><b>원인 ① 양생 부족</b> — '동절기로 인한 콘크리트 양생 미비' 지적. 슬래브 속 철근이 생선가시처럼 깨끗이 분리 = 강도 미발현으로 <b>철근 부착력 상실</b>의 증거. 타설 일지상 12월 한 달에만 사실상 4개 층 타설 → "층당 12~18일 양생" 해명과 배치.</li>
+          <li><b>원인 ② 강도 미달</b> — 37층 슬래브·38층 벽체 강도 <span class="mono">9.9 / 9.8MPa</span> : 기준강도(24MPa) 허용범위 85%(20.4MPa)의 절반 이하.</li>
+          <li><b>원인 ③ 동바리 무단 철거</b> — 39층 바닥을 설계와 달리 데크 슬래브로 무단 변경, PIT층 가설지지대 대신 콘크리트 가벽 설치 → 하중이 설계치(10.84kN/㎡)의 <span class="kw">2.26배(24.49kN/㎡)</span>로 증가. 아래 3개 층에 있어야 할 가설지지대 조기 철거로 연속 붕괴.</li>
+        </ul>
+      </div>
+
+      <div class="block law">
+        <span class="tag">기술 기준 근거 — KCS 14 20 40 (한중콘크리트)</span>
+        <ul>
+          <li><b>적용 조건</b> — 타설일의 <span class="kw">일평균기온 4℃ 이하</span>, 또는 타설 완료 후 24시간 동안 일최저기온 0℃ 이하 예상, 또는 그 이후라도 초기동해 위험이 있는 경우.</li>
+          <li><b>배합</b> — 초기동해 방지 소요강도가 초기양생 기간 내에 얻어지도록 배합, <span class="mono">W/B ≤ 60%</span>. 레미콘 주문 시 품질기준강도에 <b>기온보정값</b>을 더한 호칭강도로 주문.</li>
+          <li><b>재료</b> — 동결·빙설 혼입 골재는 그대로 사용 불가. (시멘트는 직접 가열 금지)</li>
+          <li><b>양생</b> — 소요 압축강도까지 콘크리트 온도 <span class="mono">5℃ 이상</span> 유지, 도달 후에도 <b>2일간 0℃ 이상</b> 유지. 모서리·가장자리는 초기동해에 특히 취약, 타설 직후 찬바람 노출 방지.</li>
+          <li><b>최신 제도 (2025 시행)</b> — 국토부 표준시방서 개정('24.12.30. 고시, '25.1.1. 시행)으로 <span class="kw">현장양생공시체 제작·시험 의무화</span>. 화정 사고 이후 강화된 제도라는 맥락으로 답변 가능.</li>
+        </ul>
+      </div>
+
+      <div class="block act">
+        <span class="tag">방지대책 — 프로세스 관점</span>
+        <ul>
+          <li>배합(기온보정강도 반영) → 재료(가열수·가열골재) → 타설(5~20℃ 관리) → 양생(급열·단열 보온) → <b>검측(현장양생공시체로 강도 확인 후 동바리 해체·후속공정 승인)</b>.</li>
+          <li>화정 사례는 이 마지막 고리 — <span class="kw">강도 확인 없는 지지대 철거·공정 강행</span> — 가 끊어진 경우.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── 03 화재 ───────────── -->
+  <section id="s3">
+    <div class="sec-head">
+      <div class="sec-tab">03</div>
+      <div class="sec-title">
+        <h2>화재·폭발 (용접 불티 + 가연성 단열재)</h2>
+        <p>동절기 단열재·난방기구 사용 증가로 위험이 커지는 유형</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="block case">
+        <span class="tag">실제 사례 — 이천 한익스프레스 물류센터 화재 (2020.4.29. / 38명 사망)</span>
+        <ul>
+          <li><b>직접 원인</b> — 지하 2층 산소용접 작업 중 튄 불티가 천장·벽체의 <span class="kw">우레탄폼</span>을 타고 확산.</li>
+          <li><b>안전수칙 미준수</b> — 화기작업 2인 1조 위반(1인 작업), 방화포 등 불티 비산방지 조치 없음, <b>화재감시인 이석</b>, 유해위험방지계획서상 대피로를 결로 방지 명목으로 차단.</li>
+          <li><b>구조적 원인</b> — 공기 단축을 위해 화재 당일 평상시 2배 인원 투입 → 피해 확대. 우레탄폼 유증기 작업과 용접(화기) <span class="kw">병행 시공</span> 등 총체적 안전관리 부실.</li>
+          <li><b>동절기 소형 사례</b> — 경기 군포 (2020.12.) 발코니 창호 교체공사에서 우레탄폼 용기가 전기난로에 닿아 화재·폭발 → 겨울 난방기구 관리 소홀 유형.</li>
+        </ul>
+      </div>
+
+      <div class="block law">
+        <span class="tag">법적 근거 — 산업안전보건기준에 관한 규칙</span>
+        <ul>
+          <li><b>제241조의2 (화재감시자)</b> — 작업반경 <span class="kw">11m 이내</span>에 가연성물질이 있는 장소 등에서 용접·용단 시 화재감시자 지정·배치. 업무 : 가연성물질 확인, 가스 검지·경보장치 작동 확인, 화재 시 대피 유도. 사업주는 확성기·조명기구·화재 대피용 마스크 등 방연장비 지급.</li>
+          <li>이 조항은 <b>2017.3.3. 신설</b> — 반복된 물류창고 화재의 산물. "법이 사고의 역사"라는 스토리로 활용.</li>
+          <li><b>제241조</b> — 통풍·환기가 불충분한 장소의 화재위험작업 시 환기 목적의 <span class="kw">산소 사용 금지</span>.</li>
+        </ul>
+      </div>
+
+      <div class="block act">
+        <span class="tag">방지대책</span>
+        <ul>
+          <li>화기작업허가제(PTW) 운영, 화기작업과 유증기 발생 작업(우레탄폼 등)의 <b>시간적·공간적 분리</b>.</li>
+          <li>불티비산방지포·소화기 배치, 화재감시자 상주(이석 금지), 임시소방시설 설치, 피난로 확보·주지.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── 04 가설구조물 ───────────── -->
+  <section id="s4">
+    <div class="sec-head">
+      <div class="sec-tab">04</div>
+      <div class="sec-title">
+        <h2>거푸집·동바리 및 가설구조물 붕괴</h2>
+        <p>폭설·강풍 하중 + 동절기 양생 불량의 복합 리스크</p>
+      </div>
+    </div>
+    <div class="sec-body">
+      <p>겨울철은 전반적으로 사고사망자가 적은 계절이지만, 고용노동부 「동절기 건설현장 안전보건 길잡이」는
+      <span class="kw">거푸집 붕괴 · 중독-질식 · 화재-폭발에 의한 '대형사고'</span> 예방에 각별한 주의가 필요하다고 명시한다.
+      대표 사례는 02의 광주 화정 아이파크 (동절기 양생 불량 + 동바리 철거 복합).</p>
+
+      <div class="block law">
+        <span class="tag">근거 · 점검 기준</span>
+        <ul>
+          <li><b>폭설 대비</b> — 비상용 제설자재·장비 확보, 비상대기반 편성·운영. 폭설·강풍 시 <span class="kw">비계·동바리·흙막이지보공</span> 등 가설구조물의 변형·붕괴 여부 점검 (동절기 자율점검 항목).</li>
+          <li><b>건축공사 표준시방서</b> — 시공 중인 고층 건물은 <span class="kw">최소 아래 3개 층에 가설지지대(필러 서포트) 존치</span>로 상부 타설 하중을 지지 (화정에서 위반된 조항).</li>
+        </ul>
+      </div>
+
+      <div class="block act">
+        <span class="tag">방지대책</span>
+        <ul>
+          <li>가설구조물 구조검토 시 <b>적설하중 반영</b>, 적설 시 즉시 제설.</li>
+          <li>동바리 해체는 반드시 압축강도 확인 후, 존치 계획(3개 층)을 공정표에 명시하고 검측 체계로 통제.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── 05 지반 ───────────── -->
+  <section id="s5">
+    <div class="sec-head">
+      <div class="sec-tab">05</div>
+      <div class="sec-title">
+        <h2>지반 동결·융해 → 흙막이·사면 붕괴</h2>
+        <p>겨울에 심어진 위험이 해빙기(2~3월)에 터지는 연속 리스크</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <h3>메커니즘</h3>
+      <p>기온 0℃ 이하에서 지표면 수분이 얼며 토양이 부풀어 오르는 <span class="kw">'배부름현상'(동상, frost heave)</span>이
+      발생했다가, 해빙기에 동결 지반이 융해되며 연약화 → 기초 약화 → 균열·붕괴를 유발한다.
+      동결 상태에서는 얼음이 지반을 지지하는 것처럼 보여 위험을 과소평가하기 쉽다.</p>
+
+      <div class="block law">
+        <span class="tag">근거 · 관리 체계</span>
+        <ul>
+          <li>굴착작업 시 지반 붕괴·토석 낙하 위험이 있으면 <b>흙막이 지보공 설치, 방호망 설치, 출입금지</b> 등 사전 위험방지 조치 (산업안전보건기준에 관한 규칙 굴착작업 규정).</li>
+          <li>점검반을 구성해 흙막이지보공 부재의 <span class="kw">변형·부식·손상·탈락</span> 여부 점검, 계측결과 분석으로 이상 유무 지속 확인.</li>
+          <li><b>국토교통부</b> — 해빙기마다 터파기·흙막이 등 동결·융해 위험 현장, 도로변 인접 재건축·재개발 현장 등 <span class="kw">전국 1,700곳 집중 안전점검</span>.</li>
+          <li><b>국토안전관리원</b> — '해빙기 건설공사 및 시설물 안전점검표'를 체크리스트 형태로 배포, 공종별 취약 항목 점검 지원.</li>
+        </ul>
+      </div>
+
+      <div class="block act">
+        <span class="tag">방지대책</span>
+        <ul>
+          <li>굴착면 기울기 준수, 흙막이 <b>계측관리(변위·응력) 강화</b>, 해빙기 전 배수로 정비.</li>
+          <li>동절기 안전관리계획에 해빙기 점검 일정을 포함시켜 '겨울 → 봄' 연속 리스크로 관리.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── 06 한랭 ───────────── -->
+  <section id="s6">
+    <div class="sec-head">
+      <div class="sec-tab">06</div>
+      <div class="sec-title">
+        <h2>한랭질환 · 결빙 전도</h2>
+        <p>작업환경 관리 — 특보 단계별 작업 조정이 기본 골격</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="block law">
+        <span class="tag">근거 — 한파특보 기준</span>
+        <ul>
+          <li><b>한파주의보</b> — 아침 최저기온이 전날보다 <span class="mono">10℃ 이상</span> 하강해 3℃ 이하이고 평년보다 3℃ 낮을 것으로 예상될 때.</li>
+          <li><b>한파경보</b> — <span class="mono">15℃ 이상</span> 하강 등. 특보 단계별 옥외작업 조정(단축·중지)이 동절기 안전관리계획의 기본.</li>
+          <li>안전보건공단은 한파 시 건설현장 점검에서 <span class="kw">양생작업 질식 + 추락사고</span> 예방을 집중 점검 — 감독기관의 겨울 포커스도 이 두 축.</li>
+        </ul>
+      </div>
+
+      <div class="block act">
+        <span class="tag">방지대책</span>
+        <ul>
+          <li><b>한랭질환</b> — 따뜻한 옷·물·장소(휴게시설) 제공, 고혈압 등 뇌심혈관계 고위험군 근로자 관리, 무리한 새벽작업 지양.</li>
+          <li><b>결빙 전도·추락</b> — 이른 아침 결빙 시간대 고소작업 지양, 통로 제설·염화칼슘 살포, 미끄럼방지 안전화, 고소작업 시 안전대 철저.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── 07 정리 ───────────── -->
+  <section id="s7">
+    <div class="sec-head">
+      <div class="sec-tab">07</div>
+      <div class="sec-title">
+        <h2>면접 · 발표용 핵심 정리</h2>
+        <p>5대 위험 × (사례 · 근거 · 1순위 대책) 한눈 요약</p>
+      </div>
+    </div>
+    <div class="sec-body">
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>위험</th><th>대표 사례</th><th>핵심 근거</th><th>1순위 대책</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>질식</td>
+              <td>대구('21), 화성·용인·파주</td>
+              <td>안전보건규칙 제619~625조<br>적정공기 (O₂ 18%↑, CO 30ppm↓)</td>
+              <td>갈탄 → 열풍기 대체</td>
+            </tr>
+            <tr>
+              <td>동해·붕괴</td>
+              <td>광주 화정 ('22.1., 6명 사망)</td>
+              <td>KCS 14 20 40 (일평균 4℃)<br>현장양생공시체 의무화 ('25~)</td>
+              <td>기온보정배합 + 강도 확인 후 동바리 해체</td>
+            </tr>
+            <tr>
+              <td>화재</td>
+              <td>이천 물류센터 ('20, 38명 사망)</td>
+              <td>안전보건규칙 제241조·제241조의2<br>(화재감시자, 반경 11m)</td>
+              <td>화기·유증기 작업 분리, 감시자 상주</td>
+            </tr>
+            <tr>
+              <td>지반</td>
+              <td>해빙기 흙막이 무너짐</td>
+              <td>굴착 규정 + 국토부 해빙기 점검 (1,700개소)</td>
+              <td>계측관리 강화, 배수 정비</td>
+            </tr>
+            <tr>
+              <td>한랭</td>
+              <td>—</td>
+              <td>한파특보 기준 (10℃ 하강·3℃ 이하)</td>
+              <td>작업시간 조정 + 온·습 휴게시설</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="interview">
+        <h3>답변 차별화 포인트 3가지</h3>
+        <ol>
+          <li><strong>사고 → 법 개정의 흐름으로 답하기</strong> — 이천 화재 → 화재감시자 제도 강화(제241조의2), 화정 붕괴 → 콘크리트 품질기준 개정·현장양생공시체 의무화('25.1. 시행). <span class="kw">"규정은 재해의 기록"</span>이라는 관점은 시공관리자 마인드를 보여줌.</li>
+          <li><strong>CO 확산 경로 언급</strong> — 대구 사례의 엘리베이터 피트·인양구 확산. 양생장 천막 안만 통제하면 된다는 통념을 깨는 디테일.</li>
+          <li><strong>품질-안전-공정의 삼각 연결</strong> — 화정 사례에서 <span class="kw">공기 압박(공정) → 양생 생략(품질) → 동바리 조기 철거(안전) → 붕괴</span>로 이어진 인과사슬을 설명할 수 있으면 신입 수준을 넘는 답변.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    출처 기반 : 고용노동부 보도자료·동절기 건설현장 안전보건 길잡이, 산업안전보건기준에 관한 규칙, KCS 14 20 40 한중콘크리트,
+    국토교통부·국토안전관리원 해빙기 점검자료, 언론 보도(광주 화정 아이파크·이천 물류센터 등).
+    본 문서는 학습·발표 준비용 요약 노트이며, 실제 적용 시 최신 법령·시방서 원문을 확인할 것.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>겨울철 건설현장 위험 요인 및 안전관리 방안</title>
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', '맑은 고딕', sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .header {
+            border-bottom: 3px solid #cbd5e1;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #1e293b;
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+        .header .subtitle {
+            color: #64748b;
+            font-size: 16px;
+            margin: 0;
+        }
+        .label-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .badge-general { background-color: #e0f2fe; color: #0369a1; }
+        .badge-inference { background-color: #fef3c7; color: #d97706; }
+        .badge-unverified { background-color: #fee2e2; color: #b91c1c; }
+        
+        h2 {
+            font-size: 20px;
+            color: #0f172a;
+            border-left: 5px solid #f97316;
+            padding-left: 12px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            font-size: 16px;
+            color: #334155;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            background-color: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        p {
+            margin: 0 0 12px 0;
+            text-align: justify;
+        }
+        ul, ol {
+            margin: 0 0 20px 0;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .danger-box {
+            background-color: #fff7ed;
+            border: 1px solid #ffedd5;
+            border-left: 4px solid #ea580c;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .danger-box strong {
+            color: #c2410c;
+        }
+        .safe-box {
+            background-color: #f0fdf4;
+            border: 1px solid #dcfce7;
+            border-left: 4px solid #16a34a;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .safe-box strong {
+            color: #15803d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>겨울철 건설현장 위험 요인 및 안전관리 방안</h1>
+        <div class="subtitle">시즌별 안전 이슈 분류 및 대책 수립 지침 (겨울철 집중 분석)</div>
+    </div>
+
+    <h2>1. 개요</h2>
+    <p><span class="label-badge badge-general">[GENERALIZATION]</span> 겨울철 건설현장은 기온 강하, 폭설, 강풍, 동결 등의 기후적 특성으로 인해 근로자의 건강장해뿐만 아니라 대형 고장 및 재해 발생 가능성이 타 계절에 비해 상대적으로 높게 나타나는 시기입니다.</p>
+    <p><span class="label-badge badge-inference">[INFERENCE]</span> 공기(공사기간)를 맞추기 위해 혹한기 속에서도 콘크리트 타설 및 양생 작업을 강행하거나, 밀폐된 공간 내에서 난방 기구를 무리하게 사용하여 발생하는 안전사고가 매년 반복되는 경향을 보입니다.</p>
+
+    <h2>2. 핵심 위험 요인별 분석 및 안전대책</h2>
+
+    <h3>위험 요인 ① : 콘크리트 양생 작업 중 질식 및 중독 사고</h3>
+    <div class="danger-box">
+        <strong>주요 발생 원인:</strong><br>
+        겨울철 콘크리트가 얼지 않도록 일정 온도를 유지하기 위해 갈탄, 목탄, 방동제 등을 사용하는 과정에서 발생합니다. 밀폐된 양생 공간 내에서 갈탄이 불완전 연소하며 다량의 일산화탄소(CO)가 체류하게 되고, 이를 인지하지 못한 근로자가 출입할 때 순식간에 질식하여 사망하는 재해로 이어집니다.
+    </div>
+    <div class="safe-box">
+        <strong>안전관리 방안:</strong>
+        <ul>
+            <li><strong>대체 열원 사용:</strong> 갈탄 및 목탄 사용을 지양하고, 일산화탄소 발생 우려가 없는 온풍기, 전기히터 등 대체 열원 설비 사용을 적극 권장합니다.</li>
+            <li><strong>가스 농도 측정 의무화:</strong> 양생 작업 구역 내부로 입장하기 전, 관리감독자 또는 안전점검자가 일산화탄소 및 산소 농도를 반드시 측정하여 안전을 확인해야 합니다.</li>
+            <li><strong>환기 설비 기동:</strong> 송풍기 등을 활용한 강제 기계 환기를 상시 실시하여 내부 가스가 정체되지 않도록 조치합니다.</li>
+            <li><strong>보호구 착용 및 표지판 설치:</strong> 출입구에 '밀폐공간/출입금지' 경고 표지를 부착하고, 구조 작업 시에는 반드시 공기호흡기 또는 송기마스크를 착용해야 합니다.</li>
+        </ul>
+    </div>
+
+    <h3>위험 요인 ② : 한파 및 강풍으로 인한 한랭질환</h3>
+    <div class="danger-box">
+        <strong>주요 발생 원인:</strong><br>
+        실외 장시간 노출 시 저체온증, 동상, 한랭두드러기 등의 한랭질환이 발생할 수 있습니다. 기온이 급격히 떨어지면 혈관이 수축하고 관절이 굳어 유연성이 저하되므로, 경미한 미끄러짐에도 중상으로 이어지기 쉽습니다.
+    </div>
+    <div class="safe-box">
+        <strong>안전관리 방안:</strong>
+        <ul>
+            <li><strong>휴식 시간 보장:</strong> 기온 및 체감온도에 따른 한파 단계별 휴식 가이드라인을 준수하고, 따뜻한 물과 음료를 상시 제공합니다.</li>
+            <li><strong>쉼터 운영:</strong> 난방 장치가 마련된 따뜻한 작업자 대기실(쉼터)을 현장 내에 설치·운영합니다.</li>
+            <li><strong>방한 보호구 지급:</strong> 방한모, 방한복, 방한장갑 등 보온 성능이 우수한 안전 보호구를 근로자에게 추가 지급합니다.</li>
+        </ul>
+    </div>
+
+    <h3>위험 요인 ③ : 폭설 및 결빙으로 인한 전도·추락 및 붕괴 사고</h3>
+    <div class="danger-box">
+        <strong>주요 발생 원인:</strong><br>
+        작업 발판, 통로, 비계 계단 등에 쌓인 눈이 얼어붙어 통행 중 미끄러짐으로 인한 전도 및 추락 사고가 빈발합니다. 또한 폭설로 인해 가설 구조물, 거푸집 동바리, 임시 천막 등이 하중을 견디지 못하고 무너지는 대형 사고의 위험이 있습니다.
+    </div>
+    <div class="safe-box">
+        <strong>안전관리 방안:</strong>
+        <ul>
+            <li><strong>즉각적인 제설 작업:</strong> 작업 시작 전 통로 및 발판의 눈과 얼음을 완전히 제거하고, 모래나 염화칼슘 등 마찰력을 높이는 자재를 살포합니다.</li>
+            <li><strong>기상 악화 시 작업 중지:</strong> 폭설, 강풍 등 기상특보 발령 시 고소 작업 및 크레인 인양 작업을 전면 중단합니다.</li>
+        </ul>
+    </div>
+
+    <h2>3. 겨울철 건설현장 안전점검 체크리스트</h2>
+    <p><span class="label-badge badge-general">[GENERALIZATION]</span> 현장 관리책임자는 겨울철 공사 진행 시 다음의 핵심 항목들을 일일 점검하여 사전에 리스크를 차단해야 합니다.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">구분</th>
+                <th style="width: 55%;">점검 항목</th>
+                <th style="width: 20%;">확인 여부</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>밀폐공간 (양생)</strong></td>
+                <td>질식 위험 공간 출입구에 출입금지 표지판이 부착되어 있는가?</td>
+                <td>[ &nbsp; ] 유 / [ &nbsp; ] 무</td>
+            </tr>
+            <tr>
+                <td><strong>밀폐공간 (양생)</strong></td>
+                <td>가스 측정 장비를 구비하고 작업 전 측정이 이루어지는가?</td>
+                <td>[ &nbsp; ] 유 / [ &nbsp; ] 무</td>
+            </tr>
+            <tr>
+                <td><strong>한랭 보건관리</strong></td>
+                <td>현장 내 따뜻한 음료와 난방 설비를 갖춘 쉼터가 작동하는가?</td>
+                <td>[ &nbsp; ] 유 / [ &nbsp; ] 무</td>
+            </tr>
+            <tr>
+                <td><strong>가설 구조물</strong></td>
+                <td>비계 및 발판의 결빙 유무를 확인하고 제설 조치를 했는가?</td>
+                <td>[ &nbsp; ] 유 / [ &nbsp; ] 무</td>
+            </tr>
+            <tr>
+                <td><strong>화재 예방</strong></td>
+                <td>임시 소화장치가 전열기구 주변에 적절히 배치되어 있는가?</td>
+                <td>[ &nbsp; ] 유 / [ &nbsp; ] 무</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        본 자료는 겨울철 건설현장 전파 및 교육용으로 제작되었으며, 현장별 여건에 맞추어 유연하게 적용하시기 바랍니다.
+    </div>
+</div>
+
+</body>
+</html>
