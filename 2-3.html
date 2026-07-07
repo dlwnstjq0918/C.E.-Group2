@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>건설현장 하절기 안전관리 포트폴리오</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config for Custom Font & Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b', // Amber base for construction safety
+                            600: '#d97706',
+                            900: '#78350f',
+                        },
+                        warning: '#ef4444', 
+                        danger: '#b91c1c', 
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom styles for elements not easily handled by standard Tailwind */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .wave-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .wave-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+        .wave-shape .shape-fill {
+            fill: #ffffff;
+        }
+        .tab-active {
+            border-bottom: 4px solid #f59e0b;
+            color: #d97706;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-brand-500 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        <i class="fa-solid fa-helmet-safety"></i>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900 tracking-tight">BuildSafe Summer</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">프로젝트 개요</a>
+                    <a href="#accidents" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">주요 위험요인</a>
+                    <a href="#guidelines" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">안전 가이드라인</a>
+                    <a href="#emergency" class="text-gray-600 hover:text-brand-600 font-medium transition-colors">긴급 연락망</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#overview" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md">프로젝트 개요</a>
+                <a href="#accidents" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md">주요 위험요인</a>
+                <a href="#guidelines" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md">안전 가이드라인</a>
+                <a href="#emergency" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-brand-50 rounded-md">긴급 연락망</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg pt-32 pb-20 lg:pt-48 lg:pb-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-800 text-sm font-semibold mb-6 shadow-sm border border-orange-200">
+                2026 건설현장 하절기 안전보건 포트폴리오
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
+                무재해 건설현장을 위한 <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-brand-500">하절기 안전관리 가이드</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-800 max-w-2xl mx-auto mb-10 font-light">
+                폭염으로 인한 온열질환, 장마철 붕괴 등. <br class="hidden sm:block" />
+                여름철 건설현장에서 빈번하게 발생하는 중대재해 위험을 분석하고 체계적인 관리 방안을 제시합니다.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#guidelines" class="px-8 py-4 bg-brand-600 text-white rounded-full font-bold text-lg hover:bg-brand-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    현장 가이드라인 보기 <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#accidents" class="px-8 py-4 bg-white text-gray-800 rounded-full font-bold text-lg hover:bg-gray-50 transition-all shadow-md border border-gray-200">
+                    주요 위험요인 분석
+                </a>
+            </div>
+        </div>
+        
+        <!-- SVG Wave bottom -->
+        <div class="wave-shape">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.83,196.44,115.07C240.28,111.96,280.9,90.14,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Project Overview -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">프로젝트 개요</h2>
+                <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">건설현장 하절기 안전관리가 왜 중요한가요?</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        건설현장은 야외 작업이 대부분을 차지하여 기후 변화에 매우 취약합니다. 
+                        특히 여름철은 폭염으로 인한 작업자의 집중력 저하 및 온열질환뿐만 아니라, 집중호우와 태풍으로 인한 지반 약화, 가설구조물 붕괴 등 대형 사고의 위험이 가장 높은 시기입니다.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-brand-500 mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <strong class="text-gray-900 block">야외 고강도 노동과 온열질환</strong>
+                                <span class="text-gray-600 text-sm">뜨거운 직사광선 아래서의 작업은 열사병 등 치명적인 온열질환을 유발합니다. (물, 그늘, 휴식 필수)</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-brand-500 mt-1 mr-3 text-lg"></i>
+                            <div>
+                                <strong class="text-gray-900 block">장마철 지반 약화 및 붕괴 위험</strong>
+                                <span class="text-gray-600 text-sm">잦은 비로 굴착면이 붕괴되거나 타워크레인 등 대형 장비가 강풍에 넘어질 수 있습니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Major Accidents Grid -->
+    <section id="accidents" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">건설현장 4대 하절기 위험요인</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">건설현장에서 여름철 가장 주의해야 할 핵심 위험 요소들을 분류하고 분석했습니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 justify-center">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center text-orange-500 text-3xl mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-temperature-arrow-up"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">폭염 및 온열질환</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                        야외 작업 중 강한 직사광선 노출로 열사병, 열탈진 발생. 심할 경우 사망에 이를 수 있는 중대재해입니다.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md">열사병</span>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md">수분부족</span>
+                        <span class="px-2 py-1 bg-red-100 text-red-600 text-xs rounded-md">사망위험</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 group">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-3xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-cloud-showers-water"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">집중호우 및 태풍</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                        토사 무너짐, 침수, 가설구조물(비계 등) 및 타워크레인의 넘어짐 등 대규모 사고를 유발합니다.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md">토사붕괴</span>
+                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md">장비전도</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-md">대형사고</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Guidelines -->
+    <section id="guidelines" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">위험요인별 안전 가이드라인</h2>
+                <p class="text-gray-600">아래 탭을 클릭하여 현장에서 즉시 적용 가능한 구체적인 안전 수칙을 확인하세요.</p>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex flex-wrap border-b border-gray-200 mb-8" id="tabs-nav">
+                <button class="flex-1 py-4 px-2 text-center font-medium text-lg tab-active transition-colors" data-target="tab-heat">
+                    <i class="fa-solid fa-sun mr-2"></i> 폭염 (온열질환)
+                </button>
+                <button class="flex-1 py-4 px-2 text-center font-medium text-lg text-gray-500 hover:text-brand-600 transition-colors" data-target="tab-rain">
+                    <i class="fa-solid fa-cloud-showers-water mr-2"></i> 장마/태풍
+                </button>
+            </div>
+
+            <!-- Tabs Content -->
+            <div class="bg-gray-50 rounded-2xl p-6 md:p-10 shadow-inner">
+                
+                <!-- Tab 1: Heat -->
+                <div id="tab-heat" class="tab-content animate-fade-in">
+                    <h3 class="text-2xl font-bold text-orange-700 mb-6 flex items-center">
+                        <div class="w-2 h-8 bg-orange-500 mr-3 rounded-full"></div> 온열질환 예방 3대 수칙 (물·그늘·휴식)
+                    </h3>
+                    <div class="bg-orange-50 p-6 rounded-xl border border-orange-100 mb-6">
+                        <p class="text-orange-800 font-medium">💡 온열질환 민감군 관리</p>
+                        <p class="text-sm text-orange-700 mt-2">고령자, 기저질환자, 신규 배치자 등은 옥외 작업 시 온열질환 발생 가능성이 높으므로 짝꿍제(Buddy System)를 통해 상태를 수시로 확인해야 합니다.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-white p-5 rounded-lg shadow-sm">
+                            <i class="fa-solid fa-glass-water text-3xl text-blue-400 mb-3"></i>
+                            <h4 class="font-bold text-gray-900 mb-2">충분한 수분 섭취</h4>
+                            <p class="text-sm text-gray-600">시원하고 깨끗한 물 제공, 갈증을 느끼지 않아도 15-20분 간격으로 규칙적인 섭취</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow-sm">
+                            <i class="fa-solid fa-tents text-3xl text-green-500 mb-3"></i>
+                            <h4 class="font-bold text-gray-900 mb-2">작업장 인근 그늘</h4>
+                            <p class="text-sm text-gray-600">작업자가 쉬기 편한 쾌적한 휴게시설 마련 (선풍기, 제빙기, 식염 포도당 구비)</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow-sm border-2 border-red-100">
+                            <i class="fa-solid fa-stopwatch text-3xl text-red-400 mb-3"></i>
+                            <h4 class="font-bold text-gray-900 mb-2">규칙적인 휴식</h4>
+                            <p class="text-sm text-gray-600">폭염주의보/경보 발령 시 1시간 주기로 10~15분 이상 휴식, 무더위 시간대(14~17시) 옥외작업 중지</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Rain -->
+                <div id="tab-rain" class="tab-content hidden animate-fade-in">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
+                        <div class="w-2 h-8 bg-blue-500 mr-3 rounded-full"></div> 집중호우 및 태풍 대비 현장조치
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg shadow-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm mr-3">1</span>
+                                <span class="text-gray-700"><strong>배수로 및 침사지 정비:</strong> 토사 유출을 막고 현장에 물이 고이지 않도록 사전에 준설합니다.</span>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg shadow-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm mr-3">2</span>
+                                <span class="text-gray-700"><strong>비탈면 덮개 설치:</strong> 붕괴 우려가 있는 굴착면이나 성토 경사면은 비닐, 천막 등으로 덮어 보호합니다.</span>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg shadow-sm border-l-4 border-red-500">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm mr-3">!</span>
+                                <span class="text-gray-700">강풍 주의보 발령 시, <strong>타워크레인 선회 브레이크를 해제</strong>하여 바람에 따라 자유롭게 회전하도록 조치합니다.</span>
+                            </li>
+                        </ul>
+                        <ul class="space-y-4">
+                            <li class="flex items-start bg-white p-4 rounded-lg shadow-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm mr-3">4</span>
+                                <span class="text-gray-700">외부 시스템비계 및 동바리의 연결부, 결속 상태를 점검하고 벽이음재를 추가로 보강합니다.</span>
+                            </li>
+                            <li class="flex items-start bg-white p-4 rounded-lg shadow-sm">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm mr-3">5</span>
+                                <span class="text-gray-700">바람에 날아갈 수 있는 패널, 철근 등 가벼운 자재는 단단히 묶어 고정하거나 실내로 이동시킵니다.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Contacts -->
+    <section id="emergency" class="py-16 bg-brand-900 text-white relative overflow-hidden">
+        <!-- Abstract background shapes -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-brand-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-4">건설현장 긴급 대응 및 신고 연락처</h2>
+                <p class="text-brand-100">중대재해 등 위급 상황 발생 시 즉시 작업 중지 후 신고하세요.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <!-- 119 -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center hover:bg-white/20 transition-all cursor-pointer">
+                    <div class="text-5xl font-black text-red-400 mb-2">119</div>
+                    <h3 class="text-xl font-bold mb-1">재난신고 / 구급·구조</h3>
+                    <p class="text-sm text-brand-100">인명피해 발생, 붕괴, 화재 신고</p>
+                </div>
+                <!-- 안전보건공단 -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center hover:bg-white/20 transition-all cursor-pointer">
+                    <div class="text-4xl font-black text-green-400 mb-3 mt-1">1588-3088</div>
+                    <h3 class="text-xl font-bold mb-1">안전보건공단</h3>
+                    <p class="text-sm text-brand-100">중대재해 발생 신고 및 기술지원</p>
+                </div>
+                <!-- 고용노동부 -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center hover:bg-white/20 transition-all cursor-pointer">
+                    <div class="text-4xl font-black text-blue-400 mb-3 mt-1">1350</div>
+                    <h3 class="text-xl font-bold mb-1">고용노동부 고객상담</h3>
+                    <p class="text-sm text-brand-100">산업안전보건법 관련 정책 문의</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">
+                        <i class="fa-solid fa-helmet-safety text-sm"></i>
+                    </div>
+                    <span class="font-bold text-xl text-white tracking-tight">BuildSafe Portfolio</span>
+                </div>
+                
+                <p class="text-sm text-center md:text-left">
+                    &copy; 2026 Construction Safety Management Portfolio. All rights reserved.<br>
+                    본 페이지는 건설현장 하절기 재해 예방 및 안전관리를 위한 포트폴리오 목적으로 제작되었습니다.
+                </p>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa-solid fa-envelope text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Mobile Menu Toggle
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu on link click
+            const mobileLinks = menu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+
+            // 2. Navbar Background Change on Scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.remove('shadow-sm');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.add('shadow-sm');
+                }
+            });
+
+            // 3. Tabs Logic
+            const tabButtons = document.querySelectorAll('#tabs-nav button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active styles from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('tab-active', 'border-brand-500', 'text-brand-500');
+                        btn.classList.add('text-gray-500', 'border-transparent');
+                    });
+
+                    // Add active style to clicked button
+                    button.classList.add('tab-active');
+                    button.classList.remove('text-gray-500', 'border-transparent');
+
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    // Show target tab content
+                    const targetId = button.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    if(targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
