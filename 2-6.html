@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가을철 건설현장 화재·폭발 위험 및 안전대책 발표</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom Scrollbar for Smooth Presentation */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
+        }
+        .active-dot {
+            background-color: #f59e0b !important;
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col relative">
+
+    <!-- PRESENTATION PROGRESS / QUICK NAV -->
+    <div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4 bg-slate-900/80 backdrop-blur border border-slate-800 p-4 rounded-full shadow-2xl">
+        <a href="#intro" onclick="setActiveDot(this)" class="nav-dot w-3.5 h-3.5 bg-slate-700 rounded-full transition-all duration-300 hover:bg-amber-400" title="시작 페이지"></a>
+        <a href="#hazard-causes" onclick="setActiveDot(this)" class="nav-dot w-3.5 h-3.5 bg-slate-700 rounded-full transition-all duration-300 hover:bg-amber-400" title="01. 위험 원인"></a>
+        <a href="#gimpo-case" onclick="setActiveDot(this)" class="nav-dot w-3.5 h-3.5 bg-slate-700 rounded-full transition-all duration-300 hover:bg-amber-400" title="02. 김포 참사 분석"></a>
+        <a href="#solutions" onclick="setActiveDot(this)" class="nav-dot w-3.5 h-3.5 bg-slate-700 rounded-full transition-all duration-300 hover:bg-amber-400" title="03. 안전 대책"></a>
+        <a href="#simulator" onclick="setActiveDot(this)" class="nav-dot w-3.5 h-3.5 bg-slate-700 rounded-full transition-all duration-300 hover:bg-amber-400" title="04. 현장 실연"></a>
+    </div>
+
+    <!-- HEADER NAVIGATION -->
+    <nav class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur border-b border-slate-900">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-helmet-safety text-slate-950 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-tight text-white">가을철 건설안전 사례 <span class="text-amber-500"></span></h1>
+                    <span class="text-[10px] text-slate-400 block font-bold uppercase tracking-widest">Autumn Construction Safety Presentation</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+                <a href="#hazard-causes" class="hover:text-amber-400 transition-colors">01. 위험 원인</a>
+                <a href="#gimpo-case" class="hover:text-amber-400 transition-colors">02. 실제 사례</a>
+                <a href="#solutions" class="hover:text-amber-400 transition-colors">03. 대책 방안</a>
+                <a href="#simulator" class="hover:text-amber-400 transition-colors">04. 시뮬레이터</a>
+            </div>
+
+            <div>
+                <span class="text-xs bg-slate-900 border border-slate-800 text-amber-400 font-extrabold px-3.5 py-2 rounded-full flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span> 
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- INTRO / HERO SECTION -->
+    <section id="intro" class="min-h-[85vh] flex items-center justify-center relative overflow-hidden py-20 px-6 bg-slate-950">
+        <!-- Background Accents -->
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <div class="absolute inset-0 bg-[radial-gradient(#f59e0b_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
+        </div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-8 uppercase tracking-widest">
+                <i class="fa-solid fa-tower-safety"></i> Seasonal Construction Risk Analysis
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-8">
+                계절별 건설현장 위험 요인:<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-rose-500">가을철 화재·폭발 안전관리 방안</span>
+            </h1>
+            <p class="text-slate-400 text-base sm:text-xl leading-relaxed mb-12 max-w-3xl mx-auto">
+                왜 가을철 건설현장의 화재·폭발 위험이 극대화되는지 <strong class="text-slate-200">기후적·공정적 원인</strong>을 추적 <br class="hidden sm:inline">
+                <strong>김포 주상복합 신축현장 참사</strong>의 인과관계를 통해 유기적인 예방 대책을 제시
+            </p>
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                <a href="#hazard-causes" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-xl shadow-amber-500/10 flex items-center justify-center gap-3 text-base">
+                    발표 시작하기 <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <span class="text-sm text-slate-500 font-medium">마우스 휠을 내리거나 우측 퀵바를 이용하세요</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 01: HAZARDS -->
+    <section id="hazard-causes" class="py-24 bg-slate-900/30 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <span class="text-amber-500 font-extrabold text-xs uppercase tracking-widest block mb-2">PART 01. 발생 근거</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">왜 가을철에 화재·폭발 위험이 극대화되는가?</h2>
+                <div class="w-20 h-1 bg-amber-500 mt-4 rounded"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 원인 1 -->
+                <div class="bg-slate-900/80 border border-slate-800 p-8 rounded-2xl relative hover:border-amber-500/30 transition-all duration-300 group">
+                    <div class="absolute top-6 right-6 text-6xl font-black text-slate-800/40 select-none">01</div>
+                    <div class="w-14 h-14 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-droplet-slash"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-amber-400 transition-colors">기후적 요인 (건조 기후 & 정전기)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        대한민국의 가을(9~11월)은 대기의 상대습도가 <strong class="text-amber-400">35% 이하</strong>로 곤두박질치는 시기입니다. 
+                    </p>
+                    <p class="text-slate-500 text-xs leading-relaxed">
+                        건조한 대기는 전하가 공기 중으로 소산되는 것을 막고 근로자의 작업복 및 건조한 단열 표면에 고전압 정전기를 축적시킵니다. 우레탄 폼 발포 등 단열 공정 중 분출되는 인화성 유증기에 미세한 <strong>정전기 스파크가 발화원으로 작용</strong>하여 대형 폭발을 유발합니다.
+                    </p>
+                </div>
+
+                <!-- 원인 2 -->
+                <div class="bg-slate-900/80 border border-slate-800 p-8 rounded-2xl relative hover:border-amber-500/30 transition-all duration-300 group">
+                    <div class="absolute top-6 right-6 text-6xl font-black text-slate-800/40 select-none">02</div>
+                    <div class="w-14 h-14 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-amber-400 transition-colors">공정적 요인 (겨울 전 마감공사 몰림)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        동절기(12~2월) 한파 속에서는 콘크리트 동결 등으로 인해 외벽 타설 및 외부 골조 공사가 완전히 마비됩니다.
+                    </p>
+                    <p class="text-slate-500 text-xs leading-relaxed">
+                        이 때문에 시공사들은 겨울이 오기 전인 가을철에 내부 단열재(우레탄 폼), 방수, 에폭시 도장 등 인화성 가스가 발생하는 내부 마감 작업을 압축적으로 진행합니다. 이로 인해 공기(工期) 압박이 누적되며 <strong>배관 용접 등 화기 공정과 마감 공정이 한 지하층에서 동시에 섞이는 교차 작업</strong>이 무리하게 가동됩니다.
+                    </p>
+                </div>
+
+                <!-- 원인 3 -->
+                <div class="bg-slate-900/80 border border-slate-800 p-8 rounded-2xl relative hover:border-amber-500/30 transition-all duration-300 group">
+                    <div class="absolute top-6 right-6 text-6xl font-black text-slate-800/40 select-none">03</div>
+                    <div class="w-14 h-14 bg-rose-500/10 text-rose-400 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 group-hover:text-amber-400 transition-colors">확산적 요인 (가을철 강풍 영향)</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        가을철 한반도를 통과하는 강한 이동성 고기압과 돌풍성 계절풍은 화재 진압 및 제어를 방해하는 주범입니다.
+                    </p>
+                    <p class="text-slate-500 text-xs leading-relaxed">
+                        강하게 유입되는 가을바람은 내부에 다량의 산소를 공급하는 '풀무' 역할을 하여 초기 가벼운 화재를 순식간에 폭발적 연소 수준으로 증폭시킵니다. 또한, 단열재가 타면서 발생하는 시안화수소($HCN$)와 일산화탄소($CO$) 등 치명적 유독가스를 가설 계단과 통로를 통해 전 층으로 순식간에 쏘아 보내 탈출을 막습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 02: CASE STUDY -->
+    <section id="gimpo-case" class="py-24 bg-slate-950 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <span class="text-rose-500 font-extrabold text-xs uppercase tracking-widest block mb-2">PART 02. 실제 사건 사례</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">김포 주상복합 신축현장 화재 참사 (2016)</h2>
+                <p class="text-slate-400 text-sm mt-3">가을철 기후 및 마감 공사의 특성이 복합적으로 작용하여 안전 불감증과 결합한 대표적 대형 참사입니다.</p>
+                <div class="w-20 h-1 bg-rose-500 mt-4 rounded"></div>
+            </div>
+
+            <!-- Case Summary Panel -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+                <!-- Case Left Facts -->
+                <div class="lg:col-span-4 flex flex-col justify-between bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                    <div>
+                        <div class="inline-block bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-md text-xs font-bold mb-6">사고 개요</div>
+                        <ul class="space-y-6">
+                            <li>
+                                <span class="text-xs text-slate-500 block">발생 일자</span>
+                                <span class="text-base font-bold text-slate-200">2016년 9월 10일 (가을철 대기 건조기)</span>
+                            </li>
+                            <li>
+                                <span class="text-xs text-slate-500 block">발생 장소</span>
+                                <span class="text-base font-bold text-slate-200">경기도 김포시 장기동 주상복합 신축현장 지하층</span>
+                            </li>
+                            <li>
+                                <span class="text-xs text-slate-500 block">피해 규모</span>
+                                <span class="text-lg font-bold text-rose-400">근로자 4명 사망, 2명 중상</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-slate-800 text-xs text-slate-500">
+                        * 겨울 한파 도래 전 내부 배관 설계 및 단열 처리를 완전히 종료하기 위해 공정 속도를 극도로 높여 작업하던 중 발생
+                    </div>
+                </div>
+
+                <!-- Case Right: Timeline of Causality -->
+                <div class="lg:col-span-8 bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                    <h3 class="text-lg font-bold text-white mb-8"><i class="fa-solid fa-arrows-spin text-amber-500 mr-2"></i>사고 유발의 핵심 인과관계 및 근거</h3>
+                    
+                    <div class="relative pl-8 border-l-2 border-slate-800 space-y-12">
+                        <!-- Step 1 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-0.5 w-6.5 h-6.5 bg-slate-900 border-2 border-amber-500 rounded-full flex items-center justify-center text-xs font-extrabold text-amber-400">1</span>
+                            <h4 class="text-base font-bold text-slate-100 mb-2">지하층 밀폐공간 유증기 포화 (가연성 가스 방출)</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                다가오는 동절기를 앞두고 마감공사를 마무리하기 위해 벽면에 우레탄 폼 스프레이 발포 작업을 연속 진행했습니다. 우레탄 폼 시공 시 방출되는 <strong>가연성 유증기(유기용제 및 에폭시 가스 등)</strong>는 밀폐되고 환기 장치가 없는 지하 구역에 고밀도로 정체되었습니다.
+                            </p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-0.5 w-6.5 h-6.5 bg-slate-900 border-2 border-amber-500 rounded-full flex items-center justify-center text-xs font-extrabold text-amber-400">2</span>
+                            <h4 class="text-base font-bold text-slate-100 mb-2">동일 시점/장소 내 스프링클러 배관 화기 용접 (점화원)</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                가을 건조 기후로 인해 마찰 정전기 하전률이 최대치였던 상태였습니다. 심각하게도 같은 구역 내에서 스프링클러 배관 연결을 위한 <strong>용접 및 그라인더 절단 작업이 동시에 추진</strong>되었습니다. 용접 중 발생한 고온 불티가 축적된 유증기 폭발 하한계 가스구름에 인접 도달했습니다.
+                            </p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-0.5 w-6.5 h-6.5 bg-rose-500 border-2 border-rose-400 rounded-full flex items-center justify-center text-xs font-extrabold text-slate-950 animate-pulse">3</span>
+                            <h4 class="text-base font-bold text-rose-400 mb-2">유증기 점화 후 대폭발 및 유독 가스(HCN) 질식 (재해 발생)</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">
+                                용접 스파크 또는 마찰 정전기 방전이 체류된 유증기에 닿으면서 지하 내부 전체가 일시에 화염에 휩싸이는 <strong>가스 폭발이 실현</strong>되었습니다. 벽면에 이미 시공되어 있던 유기 우레탄 단열재에 인화되었고, 우레탄 가열 시 발생하는 맹독성 <strong>시안화수소(청산가스)</strong>가 환기가 되지 않는 대피 경로에 고이며 근로자들이 즉시 의식을 잃고 유독가스 질식사하였습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 03: DETAILED SOLUTIONS -->
+    <section id="solutions" class="py-24 bg-slate-900/30 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <span class="text-amber-500 font-extrabold text-xs uppercase tracking-widest block mb-2">PART 03. 대처 및 방지 대책</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">가을철 기후·공정 부합형 맞춤형 안전대책</h2>
+                <p class="text-slate-400 text-sm mt-3">원인 및 교훈에 1:1로 대응되는 유기적인 예방 대책을 설계했습니다.</p>
+                <div class="w-20 h-1 bg-amber-500 mt-4 rounded"></div>
+            </div>
+
+            <!-- Tab Buttons for Group Presentation Interaction -->
+            <div class="flex flex-wrap gap-3 mb-10">
+                <button onclick="tabFilter('all')" class="solution-tab-btn active bg-amber-500 text-slate-950 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300">전체 대책</button>
+                <button onclick="tabFilter('climate')" class="solution-tab-btn bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300">기후(정전기) 차단 조치</button>
+                <button onclick="tabFilter('process')" class="solution-tab-btn bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300">공정 혼재 통제</button>
+                <button onclick="tabFilter('vent')" class="solution-tab-btn bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300">물리적 환기·보호구</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="solutions-grid">
+                <!-- Card 1 -->
+                <div class="solution-card bg-slate-900 border border-slate-800 p-8 rounded-2xl flex gap-6" data-cat="climate">
+                    <div class="w-14 h-14 bg-sky-500/10 text-sky-400 rounded-2xl flex items-center justify-center shrink-0 text-2xl">
+                        <i class="fa-solid fa-shower"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">미스트 분무 및 강제 살수 가습</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-3">
+                            습도가 극단적으로 건조해지는 가을철에는 도장 및 단열 뿜칠 공정 전, <strong>작업 구역 벽체 및 바닥면 전반에 걸쳐 고압 수분 살수</strong>를 의무화합니다.
+                        </p>
+                        <span class="text-xs text-sky-400 font-mono bg-sky-500/10 px-2 py-1 rounded">정전기 대전 예방 (물리적 차단)</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="solution-card bg-slate-900 border border-slate-800 p-8 rounded-2xl flex gap-6" data-cat="process">
+                    <div class="w-14 h-14 bg-rose-500/10 text-rose-400 rounded-2xl flex items-center justify-center shrink-0 text-2xl">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">동일 시점 '혼재 작업' 법적 절대 금지</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-3">
+                            우레탄 폼 발포 구획 혹은 도장 유기용제 사용 구역과 <strong>스프링클러 배관 설치 및 전기 그라인더 등 화기 공정의 시간대 병행을 전면 금지</strong>합니다.
+                        </p>
+                        <span class="text-xs text-rose-400 font-mono bg-rose-500/10 px-2 py-1 rounded">점화원 원천 분리 (관리적 조치)</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="solution-card bg-slate-900 border border-slate-800 p-8 rounded-2xl flex gap-6" data-cat="vent">
+                    <div class="w-14 h-14 bg-teal-500/10 text-teal-400 rounded-2xl flex items-center justify-center shrink-0 text-2xl">
+                        <i class="fa-solid fa-fan"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">대구경 고풍량 방폭 배풍기 강제 운전</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-3">
+                            밀폐된 지하층 구역 하단에 고이게 되는 인화성 유증기를 기류 가동을 통해 빠르게 뽑아내기 위하여, <strong>규격에 상응하는 고출력 방폭 배풍기 24시간 작동</strong>을 규정화합니다.
+                        </p>
+                        <span class="text-xs text-teal-400 font-mono bg-teal-500/10 px-2 py-1 rounded">가스 정체 최소화 (공학적 설비)</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="solution-card bg-slate-900 border border-slate-800 p-8 rounded-2xl flex gap-6" data-cat="climate">
+                    <div class="w-14 h-14 bg-amber-500/10 text-amber-400 rounded-2xl flex items-center justify-center shrink-0 text-2xl">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">작업자 인체 접지용 제전 의복·제전화 의무 지급</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-3">
+                            근로자의 움직임으로 인한 건조기 대전 현상을 억제하도록, 인화 물질 취급 구역 근로자 전원에게 <strong>마찰 대전압이 차단되는 제전 가공복과 도체 접지화</strong>를 지급 및 의무 착용시킵니다.
+                        </p>
+                        <span class="text-xs text-amber-400 font-mono bg-amber-500/10 px-2 py-1 rounded">정전기 제거 (개인 보호구)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 04: PRESENTATION INTERACTIVE SIMULATOR -->
+    <section id="simulator" class="py-24 bg-slate-950 border-t border-slate-900">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-amber-500 font-extrabold text-xs uppercase tracking-widest block mb-2"><i class="fa-solid fa-gamepad"></i> PRESENTATION INTERACTION</span>
+                <h2 class="text-3xl font-extrabold text-white">현장 화재·폭발 위험 실시간 자가진단</h2>
+                <p class="text-slate-400 text-sm mt-3">발표 시 청중들에게 현장의 설정을 직접 골라 위험 수준이 얼마나 올라가는지 보여주는 동적 검사 시뮬레이터입니다.</p>
+                <div class="w-20 h-1 bg-amber-500 mt-4 mx-auto rounded"></div>
+            </div>
+
+            <!-- Simulator Form -->
+            <div class="bg-slate-900 border border-slate-800 p-8 sm:p-10 rounded-3xl shadow-2xl relative">
+                <div class="absolute -top-3.5 right-6 bg-amber-500 text-slate-950 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">시연 모드 가동</div>
+                
+                <div class="space-y-6">
+                    <!-- Ques 1 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2.5">Q1. 가을철 현재 외부 대기 상대습도 및 현장 강제 가습 관리 수준은?</label>
+                        <select id="sim-humidity" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="high">건조 상태 방치 (대기 습도 35% 미만, 바닥 가습 무시)</option>
+                            <option value="medium">실내 단열재 부위만 국소 수분 분무 관리 중</option>
+                            <option value="low">전 공간 바닥 강제 물뿌리기 완료 (상대습도 50% 이상 유지)</option>
+                        </select>
+                    </div>
+
+                    <!-- Ques 2 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2.5">Q2. 동일 시간대 지하층 내 '혼재 작업' 현황은?</label>
+                        <select id="sim-mix" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="high">우레탄/도장 마감 중인 지하 구역 내부에서 소방 배관 화기 용접 병행 진행 중</option>
+                            <option value="medium">시간대를 오전/오후로 미약하게 구분했으나 가변 환기 시간이 부족한 상태</option>
+                            <option value="low">공종 일정을 완전히 격리 완료하여 동일 공간 혼재 불가능</option>
+                        </select>
+                    </div>
+
+                    <!-- Ques 3 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2.5">Q3. 지하 작업장 환기 및 가연성 유증기 배출 상황은?</label>
+                        <select id="sim-vent" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="high">자연 환기에 기인하거나 입구에 가설 소형 휀 1대 임시 운전 (체류 위험 다분)</option>
+                            <option value="medium">일반 고정형 선풍기 환기를 동원 중이나 사각지대가 존재</option>
+                            <option value="low">대구경 고성능 방폭형 배풍기 지속 기동 및 통로 가스 농도 지속 연동 측정</option>
+                        </select>
+                    </div>
+
+                    <!-- Ques 4 -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-2.5">Q4. 마감 투입 근로자들의 정전기 차단 보호구는?</label>
+                        <select id="sim-gear" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="high">일반 합성섬유 조끼 및 일반 미끄럼방지용 전도성 없는 일반 신발 착용</option>
+                            <option value="low">접지 라인을 내장한 방전 제전화 및 제전 원사 직조 작업복 의무 착용</option>
+                        </select>
+                    </div>
+
+                    <button onclick="runDiagnostic()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-4.5 rounded-xl transition duration-300 flex items-center justify-center gap-3 text-base shadow-xl shadow-amber-500/10">
+                        <i class="fa-solid fa-square-poll-vertical text-lg"></i> 현장 위험도 매칭 판정 및 솔루션 진단
+                    </button>
+                </div>
+
+                <!-- Interactive Result Display -->
+                <div id="sim-result" class="hidden mt-8 p-6.5 rounded-2xl border transition-all duration-500">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span id="sim-result-icon" class="text-3xl"></span>
+                        <div>
+                            <h3 id="sim-result-title" class="text-xl font-black"></h3>
+                            <p class="text-xs text-slate-400">가을철 특별 안전 진단 레벨</p>
+                        </div>
+                    </div>
+                    <p id="sim-result-desc" class="text-sm leading-relaxed text-slate-300 mb-5"></p>
+                    <div class="bg-slate-950/80 p-5 rounded-xl border border-slate-800">
+                        <h4 class="text-xs uppercase font-extrabold text-amber-400 tracking-wider mb-3"><i class="fa-solid fa-list-check mr-1.5"></i>위험 요인별 매칭 긴급 피드백</h4>
+                        <ul id="sim-result-tips" class="text-xs text-slate-400 space-y-2 list-disc list-inside"></ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center gap-6 text-2xl text-slate-600 mb-6">
+                <i class="fa-solid fa-helmet-safety hover:text-amber-500 transition-colors cursor-pointer"></i>
+                <i class="fa-solid fa-fire-extinguisher hover:text-rose-500 transition-colors cursor-pointer"></i>
+                <i class="fa-solid fa-shield-halved hover:text-sky-500 transition-colors cursor-pointer"></i>
+            </div>
+            <p class="text-sm text-slate-400 font-semibold mb-2">건설안전공학 조별 주제 발표 자료</p>
+            <p class="text-xs text-slate-500 leading-relaxed max-w-lg mx-auto">
+                본 웹페이지는 가을철 건설현장의 건조한 기후에 의한 위험성과 공정 집중 요인을 김포 참사를 통해 성실하게 규명하며, 조별 과제의 원활한 시연과 직관적인 발표 소통을 위해 특화 개발되었습니다.
+            </p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        // Set Active Dot on scroll/click
+        function setActiveDot(element) {
+            const dots = document.querySelectorAll('.nav-dot');
+            dots.forEach(dot => dot.classList.remove('active-dot'));
+            element.classList.add('active-dot');
+        }
+
+        // Active Dot auto sync with screen scroll position
+        window.addEventListener('scroll', () => {
+            const sections = ['intro', 'hazard-causes', 'gimpo-case', 'solutions', 'simulator'];
+            const dots = document.querySelectorAll('.nav-dot');
+            
+            let current = '';
+            sections.forEach(secId => {
+                const section = document.getElementById(secId);
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = secId;
+                }
+            });
+
+            dots.forEach((dot, idx) => {
+                dot.classList.remove('active-dot');
+                if (sections[idx] === current) {
+                    dot.classList.add('active-dot');
+                }
+            });
+        });
+
+        // Interactive Filtering for Countermeasures
+        function tabFilter(category) {
+            const cards = document.querySelectorAll('.solution-card');
+            const buttons = document.querySelectorAll('.solution-tab-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-slate-950');
+                btn.classList.add('bg-slate-900', 'text-slate-300', 'border-slate-800');
+            });
+
+            event.currentTarget.classList.remove('bg-slate-900', 'text-slate-300', 'border-slate-800');
+            event.currentTarget.classList.add('bg-amber-500', 'text-slate-950');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-cat') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Diagnostic Calculation Logic (Safe, Warning, High Danger)
+        function runDiagnostic() {
+            const simHum = document.getElementById('sim-humidity').value;
+            const simMix = document.getElementById('sim-mix').value;
+            const simVent = document.getElementById('sim-vent').value;
+            const simGear = document.getElementById('sim-gear').value;
+
+            let score = 0;
+
+            if (simHum === 'high') score += 25;
+            else if (simHum === 'medium') score += 10;
+
+            if (simMix === 'high') score += 40;
+            else if (simMix === 'medium') score += 20;
+
+            if (simVent === 'high') score += 25;
+            else if (simVent === 'medium') score += 10;
+
+            if (simGear === 'high') score += 10;
+
+            const resBox = document.getElementById('sim-result');
+            const resIcon = document.getElementById('sim-result-icon');
+            const resTitle = document.getElementById('sim-result-title');
+            const resDesc = document.getElementById('sim-result-desc');
+            const resTips = document.getElementById('sim-result-tips');
+
+            resBox.classList.remove('hidden');
+
+            if (score >= 70) {
+                resBox.className = "mt-8 p-6.5 rounded-2xl border border-red-500/30 bg-red-950/20";
+                resIcon.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-rose-500 text-3xl"></i>`;
+                resTitle.innerHTML = `<span class="text-rose-400">경보 레벨: 대단히 위험함 (위험지수: ${score}%)</span>`;
+                resDesc.textContent = "현재 가상의 설정 수치는 2016년 김포 주상복합 참사 발생 직전과 동일한 한계 상태를 보여줍니다. 건조한 대기 속 정전기 하전이 통제되지 않은 환경에서 폭발성 우레탄 폼의 인화성 유증기가 정체되어 있으며, 인근의 배관 용접 불꽃이라는 거대한 점화원이 동시에 제공되어 있습니다. 즉각 화기 작업을 전면 중지시키고 환기를 수행해야 대규모 가스 대폭발을 면할 수 있습니다.";
+                resTips.innerHTML = `
+                    <li class="leading-relaxed"><strong>즉각 대피 유도:</strong> 화기 작업을 수행하는 스프링클러 배관팀에 작업 중단 및 대피를 명령하십시오.</li>
+                    <li class="leading-relaxed"><strong>강제 기류 정화:</strong> 대구경 방폭 고성능 팬을 통해 가스를 건물 밖으로 배기해야만 가압 상태를 깰 수 있습니다.</li>
+                    <li class="leading-relaxed"><strong>정전기 원천 무력화:</strong> 우레탄 뿜칠 단열면 및 유증기 작업장 바닥 전부에 대한 강제 살수 가습을 수행하십시오.</li>
+                `;
+            } else if (score >= 40) {
+                resBox.className = "mt-8 p-6.5 rounded-2xl border border-amber-500/30 bg-amber-950/20";
+                resIcon.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-500 text-3xl"></i>`;
+                resTitle.innerHTML = `<span class="text-amber-400">경보 레벨: 경계 요망 (위험지수: ${score}%)</span>`;
+                resDesc.textContent = "완벽한 폭발 한계는 아직 아니지만, 정전기 방지 제전 장비 누락 혹은 미진한 가습 및 간헐적인 공종 혼재 현상으로 인해 예상치 못한 스파크 발생 시 순간 인화 화재의 위험이 상당히 큰 상태입니다.";
+                resTips.innerHTML = `
+                    <li class="leading-relaxed"><strong>화재 감시자 1:1 매칭:</strong> 용접 불꽃 작업 시에는 오직 화재 비산만 감시하는 전담 화재 감시인을 지정하여 비치하십시오.</li>
+                    <li class="leading-relaxed"><strong>복장 안전 규정 검사:</strong> 합성섬유 조끼 등 정전기 대전을 촉진시키는 일반 의복을 착용하고 입장하는 근로자를 완전히 검문하십시오.</li>
+                `;
+            } else {
+                resBox.className = "mt-8 p-6.5 rounded-2xl border border-emerald-500/30 bg-emerald-950/20";
+                resIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 text-3xl"></i>`;
+                resTitle.innerHTML = `<span class="text-emerald-400">경보 레벨: 비교적 양호 (위험지수: ${score}%)</span>`;
+                resDesc.textContent = "가을철 건조 기후에 상응하는 바닥 강제 가습과 공정 혼재가 원천 분리된 훌륭한 예방 통제 모델을 보여주고 있습니다. 가연성 가스가 상시 방출되어 배풍기로 빠져나가고 있어 정전기 스파크가 발생하여도 대형 가스 폭발로 이어지기 어렵습니다.";
+                resTips.innerHTML = `
+                    <li class="leading-relaxed"><strong>일일 농도 유지 점검:</strong> 가스 안전 체크리스트를 정비하여 오전/오후 정기 측정을 거르지 마십시오.</li>
+                    <li class="leading-relaxed"><strong>피난 대피 통로 점검:</strong> 지하층 곳곳에 맹독 가스 발생 시 비상유도등과 탈출용 축광선 등이 돌풍에 휩싸여 흐트러지지 않았는지 상시 동선을 점검하십시오.</li>
+                `;
+            }
+
+            // Smooth scrolls to result display
+            setTimeout(() => {
+                resBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
