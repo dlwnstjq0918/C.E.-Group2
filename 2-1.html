@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봄철 건설현장 스마트 안전 가이드</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        safety: {
+                            orange: '#F97316',
+                            navy: '#1E3A8A',
+                            yellow: '#EAB308',
+                            green: '#10B981',
+                            dark: '#0F172A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 3D 카드 뒤집기 스타일 */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* 스크롤바 디자인 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 캔버스 오버레이 - 마우스 이펙트 전용 */
+        #interactive-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans selection:bg-orange-500 selection:text-white overflow-x-hidden">
+
+    <!-- 마우스 상호작용 특수효과 전용 Canvas -->
+    <canvas id="interactive-canvas"></canvas>
+
+    <!-- 고정 네비게이션 바 -->
+    <nav class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-100 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <div class="bg-orange-500 text-white p-2 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-helmet-safety text-xl"></i>
+                </div>
+                <span class="font-poppins font-extrabold text-2xl tracking-wider text-slate-900">SAFETY<span class="text-orange-500">FIRST</span></span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#hero" class="nav-link font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200">홈</a>
+                <a href="#section-ground" class="nav-link font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200">1. 해빙기 지반</a>
+                <a href="#section-wind" class="nav-link font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200">2. 봄철 강풍</a>
+                <a href="#section-fever" class="nav-link font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200">3. 춘곤증 극복</a>
+                <a href="#section-checklist" class="nav-link font-medium text-slate-600 hover:text-orange-500 transition-colors duration-200">일일 진단</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="hidden lg:inline-block text-xs bg-orange-100 text-orange-600 font-bold px-3 py-1.5 rounded-full">
+                    <i class="fa-solid fa-circle-exclamation mr-1 animate-pulse"></i> 봄철 집중관리기간
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 (Welcome Area) -->
+    <header id="hero" class="relative pt-32 pb-24 md:py-48 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white overflow-hidden flex items-center">
+        <!-- 배경 데코용 그리드 패턴 -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
+            <div class="grid md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-4 py-2 rounded-full text-orange-400 font-bold text-sm">
+                        <i class="fa-solid fa-cloud-sun"></i> 봄철 건설안전 캠페인
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
+                        나른한 봄바람 속에<br>숨어있는 <span class="text-orange-500 underline decoration-wavy underline-offset-8">위험 요인</span>
+                    </h1>
+                    <p class="text-slate-300 text-lg md:text-xl max-w-xl font-light leading-relaxed">
+                        땅이 녹아 흐르는 <b>해빙기</b>, 예고 없는 <b>돌풍</b>, 생체 리듬의 복병 <b>춘곤증</b>까지. 
+                        봄철 전용 마우스 인터랙티브 가이드를 통해 스마트하게 안전을 점검해 보세요.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#section-ground" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all duration-200">
+                            체험 가이드 시작하기
+                        </a>
+                        <a href="#section-checklist" class="bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold px-6 py-4 rounded-xl hover:-translate-y-0.5 transition-all duration-200">
+                            자가 진단표 바로가기
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 대형 전조 현상 일러스트레이션 / 요약 카드 구조 -->
+                <div class="md:col-span-5 flex flex-col gap-4">
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="p-3 bg-red-500/20 text-red-400 rounded-xl"><i class="fa-solid fa-mountain text-2xl"></i></span>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">01. 해빙기 배토 현상</h3>
+                                <p class="text-slate-400 text-sm mt-1">지반 동결수 융해로 기온 0℃ 이상 시 지지력 급감</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="p-3 bg-amber-500/20 text-amber-400 rounded-xl"><i class="fa-solid fa-wind text-2xl"></i></span>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">02. 순간 풍속 주의</h3>
+                                <p class="text-slate-400 text-sm mt-1">꽃샘추위 동반 기압골 이동으로 인한 국지적 돌풍</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300">
+                        <div class="flex items-start gap-4">
+                            <span class="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl"><i class="fa-solid fa-bed text-2xl"></i></span>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">03. 생체 시계 불균형</h3>
+                                <p class="text-slate-400 text-sm mt-1">봄철 신진대사 항진으로 졸음 유발 및 집중력 저하</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-slate-50 to-transparent"></div>
+    </header>
+
+    <!-- 인터랙티브 체험 상호작용 안내 바 -->
+    <div class="bg-amber-50 border-y border-amber-200 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-center gap-3 text-amber-800 font-bold text-center">
+            <span class="animate-bounce inline-block text-xl">💡</span>
+            <p>마우스를 각 카테고리 영역으로 가져가면, 해당 위험 요인에 맞는 특수 마우스 이펙트와 애니메이션이 활성화됩니다!</p>
+        </div>
+    </div>
+
+    <!-- 카테고리 1. 해빙기 지반 약화 -->
+    <section id="section-ground" class="relative py-24 bg-white transition-all duration-300 border-b border-slate-100">
+        <!-- 영역 식별을 위한 속성 부여 (스크립트용) -->
+        <div class="section-detector" data-effect="ground"></div>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-orange-500 font-bold uppercase tracking-wider text-sm bg-orange-100 px-3 py-1 rounded-full"><i class="fa-solid fa-mountain mr-1"></i> CATEGORY 01</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-950 mt-3">해빙기 지반 약화 및 붕괴 위험</h2>
+                <p class="text-slate-500 mt-4 leading-relaxed">
+                    땅속에 얼어있던 수분이 봄 햇살에 녹아내리며 부피가 압축됩니다. 지반 침하와 법면 유실, 흙막이 지보공 붕괴 등의 강력한 재해를 부르는 요인입니다.
+                </p>
+            </div>
+
+            <!-- 마우스 호버 가변 3D 카드 디자인 -->
+            <div class="grid md:grid-cols-3 gap-8 perspective-1000">
+                <!-- 카드 1 -->
+                <div class="group h-[380px] cursor-pointer">
+                    <div class="relative w-full h-full duration-500 preserve-3d group-hover:rotate-y-180">
+                        <!-- 앞면 -->
+                        <div class="absolute inset-0 w-full h-full backface-hidden bg-slate-50 border border-slate-200 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
+                            <div class="space-y-4">
+                                <span class="text-red-500 text-4xl block"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                                <h3 class="text-xl font-bold text-slate-900">옹벽 및 석축 붕괴</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">옹벽 배면부의 동결된 유입수가 녹으며 뒤편 토압이 전면부 허용치 설계 범위를 초과해 벽체가 전방으로 무너져 내리는 전조입니다.</p>
+                            </div>
+                            <span class="text-xs text-orange-500 font-semibold flex items-center gap-1">마우스를 올려 대비책 보기 <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <!-- 뒷면 -->
+                        <div class="absolute inset-0 w-full h-full rotate-y-180 backface-hidden bg-slate-900 text-white rounded-2xl p-8 flex flex-col justify-between shadow-xl">
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-orange-400 border-b border-white/20 pb-2"><i class="fa-solid fa-shield-halved mr-1"></i> 예방 조치</h3>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 벽체 균열 상태 매일 육안 모니터링</li>
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 배수구 스케일링으로 체수 배출 원활화</li>
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 변형 발생 지역 즉각 통제구역 지정</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-slate-400">마우스를 내리면 앞면으로 돌아갑니다.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 2 -->
+                <div class="group h-[380px] cursor-pointer">
+                    <div class="relative w-full h-full duration-500 preserve-3d group-hover:rotate-y-180">
+                        <!-- 앞면 -->
+                        <div class="absolute inset-0 w-full h-full backface-hidden bg-slate-50 border border-slate-200 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
+                            <div class="space-y-4">
+                                <span class="text-red-500 text-4xl block"><i class="fa-solid fa-hill-rockslide"></i></span>
+                                <h3 class="text-xl font-bold text-slate-900">굴착 절토면 유실</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">해빙기 강우 및 지하수 침투 시 함수율이 증가해 경사면이 미끄러져 대형 매몰 사고를 동반하게 되는 사태입니다.</p>
+                            </div>
+                            <span class="text-xs text-orange-500 font-semibold flex items-center gap-1">마우스를 올려 대비책 보기 <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <!-- 뒷면 -->
+                        <div class="absolute inset-0 w-full h-full rotate-y-180 backface-hidden bg-slate-900 text-white rounded-2xl p-8 flex flex-col justify-between shadow-xl">
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-orange-400 border-b border-white/20 pb-2"><i class="fa-solid fa-shield-halved mr-1"></i> 예방 조치</h3>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 경사 법면의 각도 조절(완화) 필수</li>
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 방수천막(블루시트)으로 융해수 침투 방어</li>
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 부석(불안정 암석) 제거 및 인장 균열 점검</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-slate-400">마우스를 내리면 앞면으로 돌아갑니다.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 3 -->
+                <div class="group h-[380px] cursor-pointer">
+                    <div class="relative w-full h-full duration-500 preserve-3d group-hover:rotate-y-180">
+                        <!-- 앞면 -->
+                        <div class="absolute inset-0 w-full h-full backface-hidden bg-slate-50 border border-slate-200 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
+                            <div class="space-y-4">
+                                <span class="text-red-500 text-4xl block"><i class="fa-solid fa-arrows-spin"></i></span>
+                                <h3 class="text-xl font-bold text-slate-900">흙막이 구조물 변위</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">배면 토질 상태 변화에 따라 흙막이 벽체에 불균등 하중이 작동하여 수평 변위 및 인장 파손이 유발되는 상황입니다.</p>
+                            </div>
+                            <span class="text-xs text-orange-500 font-semibold flex items-center gap-1">마우스를 올려 대비책 보기 <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                        <!-- 뒷면 -->
+                        <div class="absolute inset-0 w-full h-full rotate-y-180 backface-hidden bg-slate-900 text-white rounded-2xl p-8 flex flex-col justify-between shadow-xl">
+                            <div class="space-y-4">
+                                <h3 class="text-xl font-bold text-orange-400 border-b border-white/20 pb-2"><i class="fa-solid fa-shield-halved mr-1"></i> 예방 조치</h3>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 정밀 자동 계측 주기 단축 (일 1회 이상)</li>
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 스트러트(Strut), 어스앵커 결합 조임 재확인</li>
+                                    <li><i class="fa-regular fa-circle-check text-orange-400 mr-1"></i> 균열 및 연결핀 용접 이음부 수시 확인</li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-slate-400">마우스를 내리면 앞면으로 돌아갑니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 카테고리 2. 봄철 강풍 및 가설물 전도 -->
+    <section id="section-wind" class="relative py-24 bg-slate-50 transition-all duration-300 border-b border-slate-100 overflow-hidden">
+        <div class="section-detector" data-effect="wind"></div>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-600 font-bold uppercase tracking-wider text-sm bg-blue-100 px-3 py-1 rounded-full"><i class="fa-solid fa-wind mr-1"></i> CATEGORY 02</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-950 mt-3">봄철 강풍 및 가설물 붕괴 예방</h2>
+                <p class="text-slate-500 mt-4 leading-relaxed">
+                    봄철 한반도는 기압골의 이동이 빈번하여 갑작스러운 돌풍과 강력한 국지성 풍속을 동반합니다. 수풍면적이 높은 구조물과 크레인 사고 방지에 전력을 기울여야 합니다.
+                </p>
+            </div>
+
+            <!-- 대화형 모의 풍속 게이지 시뮬레이션 위젯 -->
+            <div class="grid lg:grid-cols-12 gap-8 items-center bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+                <div class="lg:col-span-5 space-y-6">
+                    <h3 class="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-gauge-high text-blue-500 animate-spin" style="animation-duration: 4s;"></i> 풍속 시뮬레이터
+                    </h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        아래 슬라이더를 움직여 실시간 풍속에 따른 법적 의무조치 수준을 확인해 보세요. 바람의 세기가 강해질수록 현장의 경고 상태가 동적으로 변경됩니다.
+                    </p>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-bold text-slate-700">실시간 측정 풍속 조정</label>
+                        <div class="flex items-center gap-4">
+                            <input type="range" id="wind-slider" min="0" max="35" value="8" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                            <span class="text-2xl font-black text-blue-600 w-16 text-right" id="wind-val-text">8m/s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 border-t lg:border-t-0 lg:border-l border-slate-100 pt-8 lg:pt-0 lg:pl-12 flex flex-col justify-center min-h-[220px]">
+                    <div id="wind-alert-box" class="p-6 rounded-2xl bg-slate-50 transition-all duration-300 border border-slate-200 space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span id="wind-icon-status" class="p-3 bg-emerald-100 text-emerald-600 rounded-xl text-xl"><i class="fa-solid fa-circle-check"></i></span>
+                            <div>
+                                <h4 id="wind-title-status" class="font-extrabold text-slate-900 text-lg">기본 안전운행 중</h4>
+                                <p id="wind-sub-status" class="text-xs text-slate-500">지속적인 상시풍속 모니터링이 수행되고 있습니다.</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-200/60 pt-4">
+                            <h5 class="text-sm font-bold text-slate-700">법적 의무 행동 명령:</h5>
+                            <p id="wind-desc-status" class="text-slate-600 text-sm mt-1">풍속 10m/s 이하에서는 타워크레인 등의 장비 조작이 기본적으로 원활히 가능합니다. 전방 사각지대 주시에 집중하십시오.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 강풍 조치 수칙 타일 -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-arrow-down-z-a"></i></div>
+                        <h4 class="font-bold text-slate-900 text-base">비계 결합 보강</h4>
+                        <p class="text-slate-500 text-xs mt-2 leading-relaxed">비장 지탱력 상승을 위해 벽체 연결 고정 이음새(Wall Tie) 개수를 평시 대비 120%까지 확장 배분합니다.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-border-all"></i></div>
+                        <h4 class="font-bold text-slate-900 text-base">통풍풍 구조 확보</h4>
+                        <p class="text-slate-500 text-xs mt-2 leading-relaxed">외벽 낙하 방지용 수직 수풍 보호망에 일정 간격으로 숨통 슬릿(Wind Hole)을 도려내 풍압 전압을 감쇄시킵니다.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-box-archive"></i></div>
+                        <h4 class="font-bold text-slate-900 text-base">자재 묶음화 보관</h4>
+                        <p class="text-slate-500 text-xs mt-2 leading-relaxed">경량 및 면적이 넓은 거푸집, 비계 발판 등 비산 위험성이 있는 모든 적재 자재는 고속 밴딩 처리하여 밀착 결속시킵니다.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h4 class="font-bold text-slate-900 text-base">가설 펜스 지지주</h4>
+                        <p class="text-slate-500 text-xs mt-2 leading-relaxed">돌풍 전도 예방을 위해 RPP 외부 지지 가설 펜스 하단에 삼각 기둥 구조물 및 안벽 보조 버팀틀을 보강 고정합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 카테고리 3. 춘곤증 및 휴먼에러 -->
+    <section id="section-fever" class="relative py-24 bg-white transition-all duration-300 border-b border-slate-100">
+        <div class="section-detector" data-effect="fever"></div>
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-emerald-600 font-bold uppercase tracking-wider text-sm bg-emerald-100 px-3 py-1 rounded-full"><i class="fa-solid fa-face-smile-wink mr-1"></i> CATEGORY 03</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-950 mt-3">춘곤증과 생체 불균형 부주의 방지</h2>
+                <p class="text-slate-500 mt-4 leading-relaxed">
+                    봄날 따뜻한 기온과 일교차로 인해 신체의 자율 신경계가 적응 과정에서 과부하를 겪게 됩니다. 고소작업 시 발을 헛디디는 등 치명적 휴먼에러가 집중되는 시간대입니다.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900">
+                        기온 <span class="text-emerald-500">1℃ 상승</span> 시 마다,<br>집중력 추락 재해 위험이 올라갑니다.
+                    </h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        실제 연구에 따르면 혹서기뿐만 아니라, 겨울에서 봄으로 바뀌는 급격한 기온 상승 국면에서 사고 증가율이 더 가파르게 관찰됩니다. 나른함으로 졸음이 증가하는 <b>오후 1시~3시</b> 사잇 시간대가 안전 점검의 골든 아워입니다.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xl text-emerald-500 bg-emerald-100 p-2 rounded-lg"><i class="fa-solid fa-clock"></i></span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">감성 TBM 활성화 (오전/오후)</h4>
+                                <p class="text-xs text-slate-500 mt-1">동료 간 눈인사와 안색 확인, 혈압 체크로 고혈압 및 피로 의심자 관리</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xl text-emerald-500 bg-emerald-100 p-2 rounded-lg"><i class="fa-solid fa-mug-hot"></i></span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">리프레시 워터 및 비타민 공급</h4>
+                                <p class="text-xs text-slate-500 mt-1">전용 휴게실에 비타민 식음료 및 시원한 식수를 비치하여 졸음 제거 유도</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <span class="text-xl text-emerald-500 bg-emerald-100 p-2 rounded-lg"><i class="fa-solid fa-people-group"></i></span>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">2인 1조 상호 안전감시 보증</h4>
+                                <p class="text-xs text-slate-500 mt-1">특히 단독 작업 시 전조가 없이 일어날 수 있는 실수를 보완하기 위해 감시인 배치</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 스트레칭 등 액티브 비주얼을 대신할 인터랙티브 타임라인 가이드 -->
+                <div class="bg-slate-950 text-white rounded-3xl p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                    <h4 class="text-xl font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-hourglass-half text-emerald-400"></i> 봄철 하루 안전 표준 루틴</h4>
+                    
+                    <div class="space-y-6 relative border-l border-slate-800 pl-6 ml-2">
+                        <!-- 루틴 1 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-1 w-4.5 h-4.5 bg-emerald-500 rounded-full border-4 border-slate-950"></span>
+                            <span class="text-xs text-emerald-400 font-bold">07:00 ~ 07:30</span>
+                            <h5 class="font-bold text-slate-100 text-sm mt-0.5">시작 전 TBM 및 감성 스트레칭</h5>
+                            <p class="text-xs text-slate-400 mt-1">전 근로자 전신 풀기 스트레칭 진행 및 보호모 체결 강화 교차 점검 수행</p>
+                        </div>
+                        <!-- 루틴 2 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-1 w-4.5 h-4.5 bg-slate-700 rounded-full border-4 border-slate-950"></span>
+                            <span class="text-xs text-slate-400 font-bold">11:00 ~ 11:30</span>
+                            <h5 class="font-bold text-slate-100 text-sm mt-0.5">해빙기 지반 침하 2차 중간 점검</h5>
+                            <p class="text-xs text-slate-400 mt-1">굴착 사면 및 균열 위험 옹벽 구간을 안전 관리자가 밀착 순찰 및 전조 체크</p>
+                        </div>
+                        <!-- 루틴 3 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-1 w-4.5 h-4.5 bg-emerald-500 rounded-full border-4 border-slate-950 animate-pulse"></span>
+                            <span class="text-xs text-emerald-400 font-bold">13:30 ~ 14:00</span>
+                            <h5 class="font-bold text-slate-100 text-sm mt-0.5">오후 집중력 강화 타임 (세안&스트레칭)</h5>
+                            <p class="text-xs text-slate-400 mt-1">가장 졸음이 거센 구간. 현장 전체에 신나는 활력 음악 송출 및 안전 음료 섭취</p>
+                        </div>
+                        <!-- 루틴 4 -->
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-1 w-4.5 h-4.5 bg-slate-700 rounded-full border-4 border-slate-950"></span>
+                            <span class="text-xs text-slate-400 font-bold">17:00 ~ 17:30</span>
+                            <h5 class="font-bold text-slate-100 text-sm mt-0.5">작업 종료 정비 및 배수 가로홈 체크</h5>
+                            <p class="text-xs text-slate-400 mt-1">밤 사이 얼어붙을 수 있는 고인 웅덩이 배수 정비 및 야간 통행 안전 조명 확인</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 인터랙티브 안전 체크리스트 진단 섹션 -->
+    <section id="section-checklist" class="py-24 bg-slate-50 transition-all duration-300">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-orange-500 font-bold uppercase tracking-wider text-sm bg-orange-100 px-3 py-1 rounded-full"><i class="fa-solid fa-list-check mr-1"></i> SELF DIAGNOSIS</span>
+                <h2 class="text-3xl md:text-4xl font-black text-slate-950 mt-3">일일 현장 안전 가동 진단표</h2>
+                <p class="text-slate-500 mt-4 leading-relaxed">
+                    오늘 우리 건설현장이 봄철 안전 기준에 부합하게 관리되고 있는지 자가 체크해 보세요. 항목을 모두 체크하면 인증 배지가 갱신됩니다.
+                </p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6">
+                <!-- 진단 현황 게이지 바 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-sm font-bold text-slate-700">
+                        <span>현재 현장 안전 적격성 진도율</span>
+                        <span id="progress-percent" class="text-orange-500">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-orange-500 to-amber-500 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- 체크 리스트 항목들 -->
+                <div class="divide-y divide-slate-100">
+                    <label class="flex items-start gap-4 py-4 cursor-pointer group">
+                        <input type="checkbox" class="checklist-item w-5 h-5 mt-1 rounded border-slate-300 text-orange-500 focus:ring-orange-500 accent-orange-500">
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-orange-500 transition-colors">1. 절토사면 옹벽 석축 배면부의 용수 및 흐르는 물 현상이 없다.</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">해빙기 땅속 융해수의 전조인 틈새 세어 나옴 현상 상시 점검</p>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-4 py-4 cursor-pointer group">
+                        <input type="checkbox" class="checklist-item w-5 h-5 mt-1 rounded border-slate-300 text-orange-500 focus:ring-orange-500 accent-orange-500">
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-orange-500 transition-colors">2. 흙막이 지보공 수평 수직 하중계 변동에 대한 비정상 튀는 수치가 없다.</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">매일 1회 정밀 계측 수치 안전 가이드 한계값 분석</p>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-4 py-4 cursor-pointer group">
+                        <input type="checkbox" class="checklist-item w-5 h-5 mt-1 rounded border-slate-300 text-orange-500 focus:ring-orange-500 accent-orange-500">
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-orange-500 transition-colors">3. 타워크레인 등 대형 양중기 가동 전, 순간풍속 측정 센서가 온전히 작동한다.</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">실시간 대기 풍속 10m/s, 15m/s 단계별 경보 신호 수동 점검</p>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-4 py-4 cursor-pointer group">
+                        <input type="checkbox" class="checklist-item w-5 h-5 mt-1 rounded border-slate-300 text-orange-500 focus:ring-orange-500 accent-orange-500">
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-orange-500 transition-colors">4. 비계 구조물 벽체 연결부 고정 장치를 추가로 보강 완료하였다.</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">강풍에 비계가 넘어지거나 흔들리는 것을 원천 억제</p>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-4 py-4 cursor-pointer group">
+                        <input type="checkbox" class="checklist-item w-5 h-5 mt-1 rounded border-slate-300 text-orange-500 focus:ring-orange-500 accent-orange-500">
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-orange-500 transition-colors">5. 오후 졸음 방지를 위한 세안 시설 정비 및 시원한 보건 음료 배치가 정상 완료되었다.</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">춘곤증 집중 타임(오후 13~15시) 현장 휴식시간 확보 이행</p>
+                        </div>
+                    </label>
+                    <label class="flex items-start gap-4 py-4 cursor-pointer group">
+                        <input type="checkbox" class="checklist-item w-5 h-5 mt-1 rounded border-slate-300 text-orange-500 focus:ring-orange-500 accent-orange-500">
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-orange-500 transition-colors">6. 당일 신규 투입 근로자 대상 봄철 3대 전용 안전교육을 실시하였다.</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">신규자의 현장 환경 낯섬에 의한 부주의 방지를 위한 교육 인증</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- 100% 달성 시 노출되는 축하 뱃지 카드 -->
+                <div id="congratulations-badge" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-center space-y-3 transition-all duration-300 animate-bounce">
+                    <span class="text-4xl">🏆</span>
+                    <h3 class="text-emerald-800 font-extrabold text-lg">봄철 현장 안전 100% 완벽 달성!</h3>
+                    <p class="text-emerald-600 text-xs">체크하신 규칙들이 현장 근로자 한 분 한 분의 생명과 안전을 구하게 됩니다. 오늘도 고생하셨습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900 text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+                <div class="bg-orange-500 text-white p-2 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-helmet-safety text-lg"></i>
+                </div>
+                <span class="font-poppins font-extrabold text-xl tracking-wider text-white">SAFETY<span class="text-orange-500">FIRST</span></span>
+            </div>
+            
+            <p class="text-center md:text-right text-slate-500">
+                본 웹페이지는 봄철 해빙기 건설 현장의 대형 사고 전조를 이해하고 사전에 예방하기 위해 제작된 가이드라인 서비스입니다.<br>
+                © 2026 SAFETYFIRST Inc. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- 자바스크립트 코드 (모든 인터랙션 구현) -->
+    <script>
+        /=========================================
+         * 1. 전역 마우스 파티클 애니메이션 엔진
+         ========================================*/
+        const canvas = document.getElementById('interactive-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 캔버스 사이즈 맞추기
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let activeEffect = null; // 'ground', 'wind', 'fever'
+
+        // 마우스 무브 추적
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // 마우스 속도에 따른 연속 생성용
+            if (activeEffect && Math.random() < 0.25) {
+                spawnParticle(mouseX, mouseY, activeEffect);
+            }
+        });
+
+        // 탐지기를 통한 섹션 위치 판단
+        const detectors = document.querySelectorAll('.section-detector');
+        window.addEventListener('scroll', () => {
+            let currentEffect = null;
+            detectors.forEach(detector => {
+                const rect = detector.closest('section').getBoundingClientRect();
+                // 화면의 세로 중앙 근처에 있는 섹션을 활성화
+                if (rect.top <= window.innerHeight * 0.6 && rect.bottom >= window.innerHeight * 0.3) {
+                    currentEffect = detector.getAttribute('data-effect');
+                }
+            });
+            activeEffect = currentEffect;
+        });
+
+        const particles = [];
+
+        class Particle {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.type = type;
+                this.size = Math.random() * 8 + 4;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+
+                if (type === 'ground') {
+                    // 갈색 계열 흙 파티클 낙하 효과
+                    this.vx = Math.random() * 2 - 1;
+                    this.vy = Math.random() * 3 + 2; // 낙하
+                    this.color = `rgba(${Math.floor(Math.random() * 50 + 100)}, ${Math.floor(Math.random() * 30 + 50)}, 20, `;
+                } else if (type === 'wind') {
+                    // 푸른색 계열 바람 효과
+                    this.vx = Math.random() * 4 + 3; // 바람이 우측으로 지나감
+                    this.vy = Math.sin(x * 0.05) * 1.5; 
+                    this.color = `rgba(147, 197, 253, `;
+                    this.size = Math.random() * 15 + 2; // 가로선 모양 연출을 위해 선 형태로 그림
+                } else if (type === 'fever') {
+                    // 녹색/황색 둥실둥실 Zzz 또는 커피 잔
+                    this.vx = Math.random() * 1.5 - 0.75;
+                    this.vy = -(Math.random() * 1.5 + 1); // 위로 상승
+                    this.text = ['Z', 'z', '☕', '💤', '⏰'][Math.floor(Math.random() * 5)];
+                    this.fontSize = Math.floor(Math.random() * 12 + 12);
+                }
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+
+                if (this.type === 'ground') {
+                    ctx.fillStyle = this.color + this.alpha + ')';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else if (this.type === 'wind') {
+                    ctx.strokeStyle = this.color + this.alpha + ')';
+                    ctx.lineWidth = this.size / 4;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.x - this.size * 2, this.y);
+                    ctx.stroke();
+                } else if (this.type === 'fever') {
+                    ctx.fillStyle = `rgba(16, 185, 129, ${this.alpha})`;
+                    ctx.font = `bold ${this.fontSize}px 'Poppins'`;
+                    ctx.fillText(this.text, this.x, this.y);
+                }
+
+                ctx.restore();
+            }
+        }
+
+        function spawnParticle(x, y, type) {
+            particles.push(new Particle(x, y, type));
+            if (particles.length > 150) {
+                particles.shift();
+            }
+        }
+
+        // 루프 업데이트
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                } else {
+                    p.draw();
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        /=========================================
+         * 2. 풍속 모의 시뮬레이터 인터랙션 로직
+         ========================================*/
+        const windSlider = document.getElementById('wind-slider');
+        const windValText = document.getElementById('wind-val-text');
+        const windAlertBox = document.getElementById('wind-alert-box');
+        const windIconStatus = document.getElementById('wind-icon-status');
+        const windTitleStatus = document.getElementById('wind-title-status');
+        const windSubStatus = document.getElementById('wind-sub-status');
+        const windDescStatus = document.getElementById('wind-desc-status');
+
+        windSlider.addEventListener('input', (e) => {
+            const wind = parseInt(e.target.value);
+            windValText.innerText = `${wind}m/s`;
+
+            // 풍속 단계별 대응 메시지 및 색상 상태 갱신
+            if (wind < 10) {
+                // 정상
+                windAlertBox.className = "p-6 rounded-2xl bg-emerald-50 transition-all duration-300 border border-emerald-200 space-y-4";
+                windIconStatus.className = "p-3 bg-emerald-100 text-emerald-600 rounded-xl text-xl";
+                windIconStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                windTitleStatus.innerText = "안전 조업 및 상시 운행";
+                windSubStatus.innerText = "기본 가이드 준수 상태에서 기계 및 크레인 가동 가능";
+                windDescStatus.innerText = "평시 관리 수칙에 맞춰 원활한 양중 작업 수행이 가능합니다. 현장 통풍 슬릿 유무 등 마감자재 묶음 확인에 철저해 주십시오.";
+            } else if (wind >= 10 && wind < 15) {
+                // 주의
+                windAlertBox.className = "p-6 rounded-2xl bg-amber-50 transition-all duration-300 border border-amber-200 space-y-4";
+                windIconStatus.className = "p-3 bg-amber-100 text-amber-600 rounded-xl text-xl";
+                windIconStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                windTitleStatus.innerText = "설치/해체/수리 잠정 중단";
+                windSubStatus.innerText = "산업안전보건기준에 관한 규칙 준수 의무 작동";
+                windDescStatus.innerText = "풍속이 10m/s를 초과할 경우, 타워크레인 등의 기구에 대한 모든 인위적인 해체, 신축, 수리 작업 조작을 전면 금지 및 비상 제동 정지합니다.";
+            } else if (wind >= 15 && wind < 30) {
+                // 위험
+                windAlertBox.className = "p-6 rounded-2xl bg-orange-50 transition-all duration-300 border border-orange-200 space-y-4";
+                windIconStatus.className = "p-3 bg-orange-100 text-orange-600 rounded-xl text-xl";
+                windIconStatus.innerHTML = '<i class="fa-solid fa-skull-crossbones"></i>';
+                windTitleStatus.innerText = "타워크레인 작동 즉시 전면 금지";
+                windSubStatus.innerText = "순간풍속 15m/s 초과 시 양중 중단 법적 한계 도달";
+                windDescStatus.innerText = "크레인 상부의 하물 스윙 통제 불가 상태. 즉시 모든 타워크레인 운전을 정지시키고 선회 브레이크를 임시 해제하여 바람 흐름대로 바람개비 정박 유도하십시오.";
+            } else {
+                // 치명적 재난 단계
+                windAlertBox.className = "p-6 rounded-2xl bg-red-50 transition-all duration-300 border border-red-200 space-y-4";
+                windIconStatus.className = "p-3 bg-red-100 text-red-600 rounded-xl text-xl animate-pulse";
+                windIconStatus.innerHTML = '<i class="fa-solid fa-radiation"></i>';
+                windTitleStatus.innerText = "강풍 통과 후 즉시 사전 재점검 필수";
+                windSubStatus.innerText = "순간풍속 30m/s 초과 시의 긴급 2단계 붕괴 복구 매뉴얼";
+                windDescStatus.innerText = "이토록 강한 바람이 지나간 후에는 크레인의 각 베어링 마모, 와이어로프 꼬임 및 이탈, 안전장치 오프라인 상태 여부를 재점검하기 전에는 조업 재개가 절대 불가합니다.";
+            }
+        });
+
+
+        /=========================================
+         * 3. 일일 안전 자가진단표 진도 및 배지 작동
+         ========================================*/
+        const checkboxes = document.querySelectorAll('.checklist-item');
+        const progressPercent = document.getElementById('progress-percent');
+        const progressBar = document.getElementById('progress-bar');
+        const congratsBadge = document.getElementById('congratulations-badge');
+
+        function updateChecklistProgress() {
+            const total = checkboxes.length;
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const percent = Math.round((checkedCount / total) * 100);
+
+            progressPercent.innerText = `${percent}%`;
+            progressBar.style.width = `${percent}%`;
+
+            if (percent === 100) {
+                congratsBadge.classList.remove('hidden');
+                congratsBadge.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                congratsBadge.classList.add('hidden');
+            }
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', updateChecklistProgress);
+        });
+
+
+        /=========================================
+         * 4. 상단 메뉴 네비게이션 스무스 스크롤 & 활성화
+         ========================================*/
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section, header');
+
+        window.addEventListener('scroll', () => {
+            let currentActiveId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 120) {
+                    currentActiveId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-orange-500', 'font-bold');
+                link.classList.add('text-slate-600');
+                if (link.getAttribute('href') === `#${currentActiveId}`) {
+                    link.classList.remove('text-slate-600');
+                    link.classList.add('text-orange-500', 'font-bold');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
